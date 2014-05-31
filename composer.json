@@ -1,0 +1,29 @@
+{
+    "name": "Hashgram",
+    "description": "Hashtag Photos",
+    "keywords": ["instagram", "photo", "party"],
+    "homepage": "https://github.com/victormartinez/hashgram",
+    "authors": [
+        {
+            "name": "Adriano Fialho",
+            "email": "adriano@afialho.com"
+        },
+        {
+            "name": "Victor Martinez",
+            "email": "martinezvcr@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "slim/slim": "2.4.*",
+        "slim/extras": "2.0.*",
+        "slim/views":"0.1.*",
+        "twig/twig": "1.*",
+        "twig/extensions": "*",
+        "gabordemooij/redbean": "*",
+        "raveren/kint": "dev-master"
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
