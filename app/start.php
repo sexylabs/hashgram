@@ -14,7 +14,7 @@ require ROOT . '/app/dbloader.php';
 
 // Instantiate application
 $app = new \Slim\Slim(require_once ROOT . '/app/config/app.php');
-$app->setName('RedSlim');
+$app->setName('Hashgram');
 
 
 // For native PHP session
