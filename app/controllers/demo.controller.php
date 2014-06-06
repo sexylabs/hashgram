@@ -1,5 +1,5 @@
 <?php
-
+/*
 //GET route
 $app->get('/', function () use ($app) {
 
@@ -78,4 +78,4 @@ $app->put('/put', function () use($app) {
 $app->delete('/delete', function () use($app) {
     echo 'This is a DELETE route';
 });
-?>
+*/?>
