@@ -88,6 +88,9 @@ foreach($regex as $item) {
     include $item->getPathname();
 }
 
+//INCLUDE ROUTES FILE
+include (ROOT . '/app/config/routes.php');
+
 
 
 /*

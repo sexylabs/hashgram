@@ -36,8 +36,15 @@ class RouteManager{
     protected function buildArgsAndParams($args)
     {
         $argsReIndexed['controllerName'] = $args[0];
-        $argsReIndexed['params']         = ($args[1] ? $args[1] : NULL);
-        $argsReIndexed['_GET']           = self::getUrlParams();
+
+        //remove the last array element if is void
+        if(empty($args[1][count($args[1]) - 1])){
+            unset($args[1][count($args[1]) - 1]);
+        }
+
+        $argsReIndexed['params'] = ($args[1] ? $args[1] : array());
+
+        $argsReIndexed['_GET'] = self::getUrlParams();
 
         return $argsReIndexed;
     }
@@ -48,7 +55,7 @@ class RouteManager{
 
         array_shift($args);
 
-        $this->action = (!is_null($args['params']) ? array_shift($args['params']) : "Index");
+        $this->action = (count($args['params']) ? array_shift($args['params']) : "Index");
 
         $controllerClass = self::CONTROLLERS_NAMESPACE.$this->getController();
 
