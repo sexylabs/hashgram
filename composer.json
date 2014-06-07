@@ -1,6 +1,7 @@
 {
     "name": "Hashgram",
     "description": "Hashtag Photos",
+    "version": "0.1.0",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/victormartinez/hashgram",
     "authors": [
