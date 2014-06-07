@@ -43,14 +43,18 @@ $resourceUri = $_SERVER['REQUEST_URI'];
 $rootUri = $app->request()->getRootUri();
 $assetUri = $rootUri;
 $app->view()->appendData(
-		array(		'app' => $app,
+		array(	'app' => $app,
 				'rootUri' => $rootUri,
 				'assetUri' => $assetUri,
 				'resourceUri' => $resourceUri
 ));
 
 foreach(glob(ROOT . '/app/controllers/*.php') as $router) {
-	include $router;
+    include $router;
+}
+
+foreach(glob(ROOT . '/app/framework/sexyLabs/*.php') as $router) {
+    include $router;
 }
 
 // Disable fluid mode in production environment

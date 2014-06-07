@@ -1,6 +1,5 @@
 /nbproject/
 /composer.lock
-.DS_Store
+*.DS_Store
 /.idea/
-/app/start.php
 /app/config/database.php
