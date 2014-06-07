@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers;
 
-class DemoController extends BaseController{
+use App\Framework\SexyLabs\Mvc\Controller\BasicController;
+
+class DemoController extends BasicController{
 
     public function indexAction($params){
         print "Acessando: ".get_class($this)."->index()<br /><br />";

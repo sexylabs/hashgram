@@ -36,6 +36,7 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
         )));
 */
 
+
 /*
  * SET some globally available view data
  */
@@ -43,25 +44,51 @@ $resourceUri = $_SERVER['REQUEST_URI'];
 $rootUri = $app->request()->getRootUri();
 $assetUri = $rootUri;
 $app->view()->appendData(
-		array(	'app' => $app,
-				'rootUri' => $rootUri,
-				'assetUri' => $assetUri,
-				'resourceUri' => $resourceUri
-));
+    array(
+        'app' => $app,
+        'rootUri' => $rootUri,
+        'assetUri' => $assetUri,
+        'resourceUri' => $resourceUri
+    )
+);
 
-foreach(glob(ROOT . '/app/controllers/*.php') as $router) {
-    include $router;
-}
-
-foreach(glob(ROOT . '/app/framework/sexyLabs/*.php') as $router) {
-    include $router;
-}
 
 // Disable fluid mode in production environment
 $app->configureMode(SLIM_MODE_PRO, function () use ($app) {
     // note, transactions will be auto-committed in fluid mode
     R::freeze(true);  
 });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| INCLUDING FRAMEWORK AND CONTROLLERS CLASSES
+|--------------------------------------------------------------------------
+|
+| The application needs Framework Classes (e.g. RouteManager)
+| and Controllers to works
+|
+*/
+
+//INCLUDE FRAMEWORK CLASSES RECURSIVELY
+$directory   = new RecursiveDirectoryIterator(ROOT . '/app/framework/');
+$recIterator = new RecursiveIteratorIterator($directory);
+$regex       = new RegexIterator($recIterator, '/\/*.php$/i');
+foreach($regex as $item) {
+    include $item->getPathname();
+}
+
+
+//INCLUDE CONTROLLERS RECURSIVELY
+$directory   = new RecursiveDirectoryIterator(ROOT . '/app/controllers/');
+$recIterator = new RecursiveIteratorIterator($directory);
+$regex       = new RegexIterator($recIterator, '/\/*.php$/i');
+foreach($regex as $item) {
+    include $item->getPathname();
+}
+
+
 
 /*
 |--------------------------------------------------------------------------

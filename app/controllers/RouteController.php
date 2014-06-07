@@ -1,5 +1,6 @@
 <?php
-use App\Framework\SexyLabs\Routes as Route;
+
+use App\Framework\SexyLabs\RouteManager as Route;
 
 $app->group('/', function () use ($app) {
     $app->get('', function () use ($app) {

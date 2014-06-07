@@ -1,9 +1,8 @@
 <?php
+
 namespace App\Framework\SexyLabs;
 
-use Slim\Slim;
-
-class Routes{
+class RouteManager{
 
     CONST CONTROLLERS_NAMESPACE = "App\\Controllers\\";
 

@@ -1,9 +1,9 @@
 <?php
-namespace App\Controllers;
 
-class BaseController
+namespace App\Framework\SexyLabs\Mvc\Controller;
+
+class BasicController
 {
-
     /**
      * @var \Slim\Slim $app
      */
