@@ -53,7 +53,7 @@ class RouteManager{
         $controllerClass = self::CONTROLLERS_NAMESPACE.$this->getController();
 
         $controllerObj = new $controllerClass($app);
-        $callAction    = $this->action."Action";
+        $callAction    = strtolower($this->action)."Action";
 
         return $controllerObj->$callAction($args);
     }

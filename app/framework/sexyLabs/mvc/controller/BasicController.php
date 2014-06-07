@@ -16,8 +16,6 @@ class BasicController
         $this->app = $app;
     }
 
-    public function indexAction($params){}
-
     /**
      * @return \Slim\Slim
      */
