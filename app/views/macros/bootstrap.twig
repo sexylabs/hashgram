@@ -2,10 +2,8 @@
 {% macro alert(message, type, style) %}
 	{% if message != '' %}
 		<div class="alert alert-{{ type|default('success') }} alert-block">
-			<a class="close" data-dismiss="alert">×</a>
-			<span style="{{ style|default('font-weight: bold;') }}">
-			{{ message }}
-			</span>
+            <a class="close" data-dismiss="alert">×</a>
+		    {{ message | raw }}
 		</div>
 	{% endif %}
 {% endmacro %}
@@ -13,10 +11,10 @@
 {% macro label(message, type) %}
 	{% if message == '' %}
 	{% else %}
-	<span class="label label-{{ type }}">{{ message }}</span>
+	<span class="label label-{{ type }}">{{ message | raw }}</span>
 	{% endif %}
 {% endmacro %}
 
 {% macro btn(message, type, attributes, element, size) %}
-	<{{ element }} class="btn btn-{{ size }} btn-{{ type }}" {{ attributes|default('') }}>{{ message }}</{{ element }}>
+	<{{ element }} class="btn btn-{{ size }} btn-{{ type }}" {{ attributes|default('') }}>{{ message | raw }}</{{ element }}>
 {% endmacro %}

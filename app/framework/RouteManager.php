@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework\SexyLabs;
+namespace App\Framework;
 
 /**
  * RoutesManager transforms the Slim Framework in action based framework
@@ -9,9 +9,11 @@ namespace App\Framework\SexyLabs;
  */
 class RouteManager{
 
+    protected $error;
+
     /**
      * The singleton instance
-     * @var \App\Framework\SexyLabs\RouteManager
+     * @var \App\Framework\RouteManager
      */
     private static $instance;
 
@@ -42,6 +44,9 @@ class RouteManager{
      */
     private function __construct($controller, $args, $app)
     {
+//        $this->error = new RouteErrorHandler();
+//        set_error_handler( array( $this->error, 'execute' ) );
+
         $this->app        = $app;
         $this->controller = $controller.'Controller';
         $this->routeArgs  = $this->buildArgsAndParams($args);
@@ -86,28 +91,6 @@ class RouteManager{
     }
 
     /**
-     * 1. Extract method name from $this->routeArgs
-     * 2. Includes controller php file
-     * 3. Instantiate controller Object
-     * 4. Call action method passing $args
-     *
-     * @return mixed
-     */
-    private function buildRoute()
-    {
-        $args            = $this->getRouteArgs();
-        $this->method    = (count($args['params']) ? array_shift($args['params']) : "Index");
-        $controllerClass = $this->getController();
-
-        include $this->getControllerPath();
-
-        $controllerObj = new $controllerClass($this->getApp());
-        $callAction    = strtolower($this->method)."Action";
-
-        return $controllerObj->$callAction($args);
-    }
-
-    /**
      * Returns parameters from URL (?param1=value1&param2=value2)
      * as array( 'param1' => 'value1', 'param2' => 'value2' )
      *
@@ -128,6 +111,52 @@ class RouteManager{
         }
 
         return $a;
+    }
+
+    /**
+     * . Extracts method name from $this->routeArgs
+     * . Instantiate controller Object
+     * . Call action method passing $args
+     *
+     * @return mixed
+     */
+    private function buildRoute()
+    {
+        try{
+            if($this->includeControllerFile()){
+                $args            = $this->getRouteArgs();
+                $this->method    = (count($args['params']) ? array_shift($args['params']) : "Index");
+                $controllerClass = $this->getController();
+
+                $controllerObj = new $controllerClass($this->getApp());
+                $callAction    = strtolower($this->method)."Action";
+
+                if(method_exists($controllerObj, $callAction)){
+                    $controllerObj->$callAction($args);
+                }else{
+                    throw new \Exception('<b>ERROR:</b> Bad route formats');
+                }
+            }
+        }catch (\Exception $e){
+            $this->app->flash('error', $e->getMessage());
+            $this->app->render('layouts/error.html.twig');
+        }
+    }
+
+    /**
+     * Includes controller php file
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    private function includeControllerFile(){
+        if (file_exists($this->getControllerPath())) {
+            include $this->getControllerPath();
+        } else {
+            throw new \Exception('<b>ERROR:</b> Controller not found ' . $this->getController());
+        }
+
+        return true;
     }
 
     /**

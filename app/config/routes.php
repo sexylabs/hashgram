@@ -6,7 +6,7 @@
  * @author Adriano Fialho <adriano@afialho.com>
  */
 
-use App\Framework\SexyLabs\RouteManager as Route;
+use App\Framework\RouteManager as Route;
 
 $app->group('/', function () use ($app) {
 
