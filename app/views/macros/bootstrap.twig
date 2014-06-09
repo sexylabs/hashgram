@@ -1,4 +1,4 @@
-{# bootstrap specific macros#}
+{# bootstrap specific macros #}
 {% macro alert(message, type, style) %}
 	{% if message != '' %}
 		<div class="alert alert-{{ type|default('success') }} alert-block">
