@@ -1,21 +1,33 @@
 <?php
 
+/**
+ * Configuring all app routes
+ *
+ * @author Adriano Fialho <adriano@afialho.com>
+ */
+
 use App\Framework\SexyLabs\RouteManager as Route;
 
 $app->group('/', function () use ($app) {
+
+    /**
+     * Route for root url "/"
+     */
     $app->get('', function () use ($app) {
-        $controller = "home";
-        $args       = array('home', array('index'));
-        new Route($controller, $args, $app);
+        Route::getInstance("App\\Controllers\\Home", func_get_args(), $app);
     })->name('home');
 
-    $app->get(':controller(/:params+)', function($controller) use ($app) {
-        $args = func_get_args();
-        new Route($controller, $args, $app);
-    });
+    /**
+     * Routes for DemoController
+     */
+    $app->group('demo', function () use ($app) {
+        $app->get('(/:action+)', function() use ($app) {
+            Route::getInstance("App\\Controllers\\Demo", func_get_args(), $app);
+        })->name('demo');
 
-    $app->get(':controller/(:params+)', function($controller) use ($app) {
-        $args = func_get_args();
-        new Route($controller, $args, $app);
+        $app->get('/(:action+)', function() use ($app) {
+            $app->redirect('/demo' . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
+        });
+
     });
 });

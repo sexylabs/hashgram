@@ -81,12 +81,12 @@ foreach($regex as $item) {
 
 
 //INCLUDE CONTROLLERS RECURSIVELY
-$directory   = new RecursiveDirectoryIterator(ROOT . '/app/controllers/');
-$recIterator = new RecursiveIteratorIterator($directory);
-$regex       = new RegexIterator($recIterator, '/\/*.php$/i');
-foreach($regex as $item) {
-    include $item->getPathname();
-}
+//$directory   = new RecursiveDirectoryIterator(ROOT . '/app/controllers/');
+//$recIterator = new RecursiveIteratorIterator($directory);
+//$regex       = new RegexIterator($recIterator, '/\/*.php$/i');
+//foreach($regex as $item) {
+//    include $item->getPathname();
+//}
 
 //INCLUDE ROUTES FILE
 include (ROOT . '/app/config/routes.php');
