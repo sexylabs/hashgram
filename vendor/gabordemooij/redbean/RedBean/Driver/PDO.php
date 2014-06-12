@@ -167,8 +167,7 @@ class RedBean_Driver_PDO implements RedBean_Driver
 		$version = floatval( $this->pdo->getAttribute( PDO::ATTR_SERVER_VERSION ) );
 
 		if ($driver === 'mysql') {
-			/*$encoding = ($version >= 5.5) ? 'utf8mb4' : 'utf8';*/
-            $encoding = ($version >= 5.5) ? 'utf8' : 'utf8';
+			$encoding = ($version >= 5.5) ? 'utf8mb4' : 'utf8';
 			$this->pdo->setAttribute( PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES '.$encoding ); //on every re-connect
 			$this->pdo->exec(' SET NAMES '. $encoding); //also for current connection
 			$this->mysqlEncoding = $encoding;
