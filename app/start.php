@@ -41,8 +41,8 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
  * SET some globally available view data
  */
 $resourceUri = $_SERVER['REQUEST_URI'];
-$rootUri = $app->request()->getRootUri();
-$assetUri = $rootUri;
+$rootUri     = $app->request()->getRootUri();
+$assetUri    = $rootUri;
 $app->view()->appendData(
     array(
         'app' => $app,
@@ -70,7 +70,6 @@ $app->configureMode(SLIM_MODE_PRO, function () use ($app) {
 | and Controllers to works
 |
 */
-
 //INCLUDE FRAMEWORK CLASSES RECURSIVELY
 $directory   = new RecursiveDirectoryIterator(ROOT . '/app/framework/');
 $recIterator = new RecursiveIteratorIterator($directory);
@@ -78,19 +77,6 @@ $regex       = new RegexIterator($recIterator, '/\/*.php$/i');
 foreach($regex as $item) {
     include $item->getPathname();
 }
-
-
-//INCLUDE CONTROLLERS RECURSIVELY
-$directory   = new RecursiveDirectoryIterator(ROOT . '/app/controllers/');
-$recIterator = new RecursiveIteratorIterator($directory);
-$regex       = new RegexIterator($recIterator, '/\/*.php$/i');
-foreach($regex as $item) {
-    include $item->getPathname();
-}
-
-//INCLUDE ROUTES FILE
-include (ROOT . '/app/config/routes.php');
-
 
 
 /*

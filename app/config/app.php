@@ -19,7 +19,7 @@ return array(
         'path' => ROOT . '/app/storage/logs',
         'name_format' => 'Y-m-d',
         'message_format' => '%label% - %date% - %message%'
-            ))
+    ))
 );
 
 

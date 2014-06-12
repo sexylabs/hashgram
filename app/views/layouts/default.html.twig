@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>{{ app.getName() }}</title>
+
+    {% include "partials/layouts/default/head.twig" %}
+
+    {% use "partials/layouts/default/stylesheets.twig" %}
+    {% block stylesheets %}
+        {{ parent() }}
+    {% endblock stylesheets %}
+</head>
+
+<body>
+    {% include "partials/layouts/default/header.twig" %}
+
+    {% block content %}{% endblock content %}
+
+    {% include "partials/layouts/default/footer.twig" %}
+
+    {% use "partials/layouts/default/javascripts.twig" %}
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock javascripts %}
+</body>
+
+</html>
