@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework;
+namespace App\Framework\Routing;
 
 /**
  * RoutesManager transforms the Slim Framework in action based framework
@@ -9,11 +9,11 @@ namespace App\Framework;
  */
 class RouteManager{
 
-    protected $error;
+    CONST CONTROLLERS_BASE_NAMESPACE = 'App\\Controllers\\';
 
     /**
      * The singleton instance
-     * @var \App\Framework\RouteManager
+     * @var \App\Framework\Routing\RouteManager
      */
     private static $instance;
 
@@ -30,7 +30,12 @@ class RouteManager{
     /**
      * @var string
      */
-    protected $method;
+    protected $action;
+
+    /**
+     * @var string
+     */
+    protected $defaultAction;
 
     /**
      * @var array
@@ -38,34 +43,32 @@ class RouteManager{
     protected $routeArgs;
 
     /**
-     * @param string $controller
-     * @param array $args
      * @param \Slim\Slim $app
+     * @param array $route
+     * @param array $args
      */
-    private function __construct($controller, $args, $app)
+    private function __construct($app, $route, $args)
     {
-//        $this->error = new RouteErrorHandler();
-//        set_error_handler( array( $this->error, 'execute' ) );
-
-        $this->app        = $app;
-        $this->controller = $controller.'Controller';
-        $this->routeArgs  = $this->buildArgsAndParams($args);
+        $this->app           = $app;
+        $this->controller    = self::CONTROLLERS_BASE_NAMESPACE . $route['defaults']['controller'] . 'Controller';
+        $this->defaultAction = $route['defaults']['action'];
+        $this->routeArgs     = $this->buildArgsAndParams($args);
         $this->buildRoute();
     }
 
     /**
      * Get instance of this singleton class
      *
-     * @param string $controller
-     * @param array $args
      * @param \Slim\Slim $app
+     * @param array $route
+     * @param array $args
      * @return RouteManager
      */
-    public static function getInstance($controller, $args, $app)
+    public static function getInstance($app, $route, $args)
     {
         if (!isset(self::$instance) && is_null(self::$instance)) {
             $c = __CLASS__;
-            self::$instance = new $c($controller, $args, $app);
+            self::$instance = new $c($app, $route, $args);
         }
         return self::$instance;
     }
@@ -114,32 +117,43 @@ class RouteManager{
     }
 
     /**
-     * . Extracts method name from $this->routeArgs
-     * . Instantiate controller Object
-     * . Call action method passing $args
+     * Includes controller file
+     * Extracts action name from $this->routeArgs
+     * Instantiate controller Object
+     * Call action passing $args
      *
      * @return mixed
      */
     private function buildRoute()
     {
-        try{
-            if($this->includeControllerFile()){
-                $args            = $this->getRouteArgs();
-                $this->method    = (count($args['params']) ? array_shift($args['params']) : "Index");
-                $controllerClass = $this->getController();
+        if($this->includeControllerFile()){
+            try{
+                    $args            = $this->getRouteArgs();
+                    $this->action    = (count($args['params']) ? array_shift($args['params']) : $this->defaultAction);
+                    $controllerClass = $this->getController();
 
-                $controllerObj = new $controllerClass($this->getApp());
-                $callAction    = strtolower($this->method)."Action";
+                    $controllerObj = new $controllerClass($this->getApp());
+                    $callAction    = strtolower($this->action)."Action";
 
-                if(method_exists($controllerObj, $callAction)){
-                    $controllerObj->$callAction($args);
-                }else{
-                    throw new \Exception('<b>ERROR:</b> Bad route formats');
-                }
+                    if(method_exists($controllerObj, $callAction)){
+                        $controllerObj->$callAction($args);
+                    }else{
+                        throw new \BadMethodCallException(
+                            'Method "' . $callAction . '" not found at controller ' . $this->getController(),
+                            422
+                        );
+                    }
+            }catch (\Exception $e){
+                $log = $this->app->getLog();
+                $log->warning($e);
+                $this->app->notFound();
+
+//                $a = array(
+//                    'class_name' => __CLASS__,
+//                    'method_name' => __FUNCTION__
+//                );
+//                $log->error(implode(', ', array_map(function ($v, $k) { return sprintf("%s='%s'", $k, $v); }, $a, array_keys($a))));
             }
-        }catch (\Exception $e){
-            $this->app->flash('error', $e->getMessage());
-            $this->app->render('layouts/error.html.twig');
         }
     }
 
@@ -149,11 +163,12 @@ class RouteManager{
      * @return bool
      * @throws \Exception
      */
-    private function includeControllerFile(){
+    private function includeControllerFile()
+    {
         if (file_exists($this->getControllerPath())) {
             include $this->getControllerPath();
         } else {
-            throw new \Exception('<b>ERROR:</b> Controller not found ' . $this->getController());
+            throw new \Exception('Controller not found ' . $this->getController() . '. Check your route config file.');
         }
 
         return true;
@@ -178,9 +193,9 @@ class RouteManager{
     /**
      * @return string
      */
-    public function getMethod()
+    public function getAction()
     {
-        return $this->method;
+        return $this->action;
     }
 
     /**
@@ -198,7 +213,8 @@ class RouteManager{
      *
      * @return string
      */
-    public function getControllerPath(){
+    public function getControllerPath()
+    {
         $pathParts = explode('\\', $this->controller);
 
         $controllerPath = "";

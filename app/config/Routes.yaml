@@ -1,0 +1,23 @@
+#                                                                        #
+# Default routes configuration for app                                   #
+#                                                                        #
+
+##
+# Home Routes
+-
+  name: 'Home Routes'
+  slug: 'home'
+  uriPattern: ''
+  defaults:
+    controller: 'Home'
+    action:     'index'
+
+##
+# Demo Routes
+-
+  name: 'Demo Routes'
+  slug: 'demo'
+  uriPattern: 'demo(/:action+)'
+  defaults:
+    'controller': 'Demo'
+    'action':     'index'
