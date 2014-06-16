@@ -70,12 +70,16 @@ $app->configureMode(SLIM_MODE_PRO, function () use ($app) {
 | and Controllers to works
 |
 */
+
+//INCLUDE FILES FRAMEWORK DEPENDENCIES
+include_once ROOT . "/app/framework/util/YamlParser.php";
+
 //INCLUDE FRAMEWORK CLASSES RECURSIVELY
 $directory   = new RecursiveDirectoryIterator(ROOT . '/app/framework/');
 $recIterator = new RecursiveIteratorIterator($directory);
 $regex       = new RegexIterator($recIterator, '/\/*.php$/i');
 foreach($regex as $item) {
-    include $item->getPathname();
+	include_once $item->getPathname();
 }
 
 
