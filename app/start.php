@@ -21,7 +21,7 @@ $app->setName('Hashgram');
 session_cache_limiter(false);
 session_start();
 
-// For encrypted cookie session 
+// For encrypted cookie session
 /*
 $app->add(new \Slim\Middleware\SessionCookie(array(
             'expires' => '20 minutes',
@@ -56,7 +56,7 @@ $app->view()->appendData(
 // Disable fluid mode in production environment
 $app->configureMode(SLIM_MODE_PRO, function () use ($app) {
     // note, transactions will be auto-committed in fluid mode
-    R::freeze(true);  
+    R::freeze(true);
 });
 
 
@@ -84,7 +84,7 @@ foreach($regex as $item) {
 | Configure Twig
 |--------------------------------------------------------------------------
 |
-| The application uses Twig as its template engine. This script configures 
+| The application uses Twig as its template engine. This script configures
 | the template paths and adds some extensions.
 |
 */
