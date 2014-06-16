@@ -6,14 +6,13 @@
  * @author Adriano Fialho <adriano@afialho.com>
  */
 
-use App\Framework\Routing\RouteManager as Route;
+use App\Framework\Mvc\Routing\RouteManager as Route;
 use App\Framework\Util\YamlParser as Yaml;
 
 $app->group('/', function () use ($app) {
 
     $routes = Yaml::YAMLLoad(ROOT . '/app/config/Routes.yaml');
 
-//    var_dump($routes);
     foreach($routes as $route){
         if(empty($route['uriPattern'])){
             //Routes to home path "/"
