@@ -1,7 +1,7 @@
 {
     "name": "Hashgram",
-    "description": "Replace deploy.php by the one with new permission",
-    "version": "0.3.0",
+    "description": "Includes YamlParser.php before load.routes.php file",
+    "version": "0.3.1",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/victormartinez/hashgram",
     "authors": [
