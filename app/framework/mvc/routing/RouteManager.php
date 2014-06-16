@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework\Routing;
+namespace App\Framework\Mvc\Routing;
 
 /**
  * RoutesManager transforms the Slim Framework in action based framework

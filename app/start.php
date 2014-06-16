@@ -21,7 +21,7 @@ $app->setName('Hashgram');
 session_cache_limiter(false);
 session_start();
 
-// For encrypted cookie session 
+// For encrypted cookie session
 /*
 $app->add(new \Slim\Middleware\SessionCookie(array(
             'expires' => '20 minutes',
@@ -56,7 +56,7 @@ $app->view()->appendData(
 // Disable fluid mode in production environment
 $app->configureMode(SLIM_MODE_PRO, function () use ($app) {
     // note, transactions will be auto-committed in fluid mode
-    R::freeze(true);  
+    R::freeze(true);
 });
 
 
@@ -70,12 +70,16 @@ $app->configureMode(SLIM_MODE_PRO, function () use ($app) {
 | and Controllers to works
 |
 */
+
+//INCLUDE FILES FRAMEWORK DEPENDENCIES
+include_once ROOT . "/app/framework/util/YamlParser.php";
+
 //INCLUDE FRAMEWORK CLASSES RECURSIVELY
 $directory   = new RecursiveDirectoryIterator(ROOT . '/app/framework/');
 $recIterator = new RecursiveIteratorIterator($directory);
 $regex       = new RegexIterator($recIterator, '/\/*.php$/i');
 foreach($regex as $item) {
-    include $item->getPathname();
+	include_once $item->getPathname();
 }
 
 
@@ -84,7 +88,7 @@ foreach($regex as $item) {
 | Configure Twig
 |--------------------------------------------------------------------------
 |
-| The application uses Twig as its template engine. This script configures 
+| The application uses Twig as its template engine. This script configures
 | the template paths and adds some extensions.
 |
 */
