@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Framework\SexyLabs\Mvc\Controller\BasicController;
+use App\Framework\Mvc\Controller\BasicController;
 
 class DemoController extends BasicController{
 

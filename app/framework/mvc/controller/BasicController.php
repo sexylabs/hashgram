@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework\SexyLabs\Mvc\Controller;
+namespace App\Framework\Mvc\Controller;
 
 class BasicController
 {
