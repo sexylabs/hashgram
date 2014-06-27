@@ -1,7 +1,7 @@
 {
     "name": "Hashgram",
-    "description": "Replace deploy.php by the one with new permission",
-    "version": "0.3.0",
+    "description": "Build deployment script",
+    "version": "0.4.0",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/victormartinez/hashgram",
     "authors": [
