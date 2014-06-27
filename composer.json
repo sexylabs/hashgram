@@ -1,7 +1,7 @@
 {
     "name": "Hashgram",
-    "description": "Includes YamlParser.php before load.routes.php file",
-    "version": "0.3.1",
+    "description": "Build deployment script",
+    "version": "0.4.0",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/victormartinez/hashgram",
     "authors": [
