@@ -15,8 +15,8 @@
 |
  */
 error_reporting(E_ALL | E_STRICT);
-error_reporting(error_reporting() & ~E_NOTICE);       // ignore error notice of undefined variables
-date_default_timezone_set('Asia/Hong_Kong');
+error_reporting(error_reporting() & ~E_NOTICE); // ignore error notice of undefined variables
+date_default_timezone_set('America/Bahia');
 
 define('ROOT', dirname(__DIR__));
 

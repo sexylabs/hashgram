@@ -13,7 +13,7 @@ class RouteManager{
 
     /**
      * The singleton instance
-     * @var \App\Framework\Routing\RouteManager
+     * @var \App\Framework\Mvc\Routing\RouteManager
      */
     private static $instance;
 
