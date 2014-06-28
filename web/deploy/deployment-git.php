@@ -11,4 +11,3 @@ $gitDeploy = new \App\Framework\Deploy\GitDeploy();
 // };
 
 $gitDeploy->execute();
-echo "teste deploy";
