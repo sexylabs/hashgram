@@ -12,4 +12,4 @@ $gitDeploy = new \App\Framework\Deploy\GitDeploy();
 
 $gitDeploy->execute();
 
-echo "Testing Pull Requests!";
+echo "Testing Pull Requests!!!";
