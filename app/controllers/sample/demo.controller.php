@@ -1,5 +1,4 @@
 <?php
-/*
 //GET route
 $app->get('/', function () use ($app) {
 
@@ -53,12 +52,12 @@ $app->post('/guest/comment', function () use($app) {
         $name = $app->request->post('name');
         if (empty($name))
             $name = 'anonymous';
-        
+
         $guest = R::dispense('guest');
         $guest->name = $name;
         $guest->message = $app->request->post('message');
         $guest->ip = $app->request->getIp();
-        
+
         R::store($guest);
         R::commit();
         $app->flash('success', 'Nice to hear from you!');
@@ -78,4 +77,3 @@ $app->put('/put', function () use($app) {
 $app->delete('/delete', function () use($app) {
     echo 'This is a DELETE route';
 });
-*/?>
