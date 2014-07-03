@@ -82,6 +82,24 @@ foreach($regex as $item) {
 	include_once $item->getPathname();
 }
 
+/*
+|--------------------------------------------------------------------------
+| INCLUDING SERVICES
+|--------------------------------------------------------------------------
+|
+| The application needs Services (e.g. InstagramService) to be integrated
+| with Social Networks
+|
+*/
+
+//INCLUDE SERVICES CLASSES RECURSIVELY
+$directory   = new RecursiveDirectoryIterator(ROOT . '/app/services/');
+$recIterator = new RecursiveIteratorIterator($directory);
+$regex       = new RegexIterator($recIterator, '/\/*.php$/i');
+foreach($regex as $item) {
+    include_once $item->getPathname();
+}
+
 
 /*
 |--------------------------------------------------------------------------
