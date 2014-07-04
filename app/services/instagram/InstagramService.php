@@ -18,9 +18,6 @@ class InstagramService {
     const API_URL_BASE   = "https://api.instagram.com/v1/";
     const OAUTH_URL_BASE = "https://api.instagram.com/oauth/";
 
-    /**
-     * @var
-     */
     private $code;
     private $accessToken;
 
@@ -32,14 +29,10 @@ class InstagramService {
         }
     }
 
-    public function pica() {
-        echo 'Buceta';
-    }
-
     /**
-     * Return photos base on the tag
-     * @param String $tag
+     * Return photos based on the tag
      *
+     * @param string $tag
      * @return array
      */
     public function getPhotosBasedOnTag($tag)
@@ -49,7 +42,7 @@ class InstagramService {
             $url = self::API_URL_BASE . "tags/" . $tag . "/media/recent?client_id=" . self::CLIENT_ID;
             $options = array(CURLOPT_RETURNTRANSFER => true);
 
-            return $this->makeCurl($url,$options);
+            return $this->makeCurl($url,$options, false);
         }
         else
         {
@@ -63,11 +56,12 @@ class InstagramService {
      * @param String $url
      * @param array $option
      * @param Bool $auth
-     *
      * @return array
      */
-    private function makeCurl($url, $option, $auth = false)
+    private function makeCurl($url, $option, $auth)
     {
+
+
         $cURL = curl_init($url);
 
         if ($auth)
@@ -92,19 +86,11 @@ class InstagramService {
         return json_decode($result);
     }
 
-    /**
-     * Return URL for getting the code parameter
-     *
-     * @return string
-     */
     public function getAuthorizationCodeUrl()
     {
         return self::AUTH_URL_BASE . "authorize/?client_id=" . self::CLIENT_ID . "&redirect_uri=" . self::CALLBACK . "&response_type=code";
     }
 
-    /**
-     * @param $token
-     */
     public function setAccessToken($token)
     {
         $this->accessToken = $token;
