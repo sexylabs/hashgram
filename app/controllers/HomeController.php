@@ -7,21 +7,26 @@ use App\Services\Instagram\InstagramService;
 
 class HomeController extends BasicController {
 
-    public function indexAction($tag)
+    public function indexAction($hashtag)
     {
         // If there is no hashtag parameter, $tag is assigned as "Salvador"
-        $tag = (empty($tag["_GET"]["hashtag"])) ? "Salvador" : $tag["_GET"]["hashtag"];
+        $hashtag = (empty($hashtag["_GET"]["hashtag"])) ? "Salvador" : $hashtag["_GET"]["hashtag"];
 
         $this->app->container->singleton('InstagramService', function () {
             return new InstagramService();
         });
 
         $instagram = $this->app->InstagramService;
-        $result = $instagram->getPhotosBasedOnTag($tag);
+        $result = $instagram->getPhotosBasedOnTag($hashtag);
 
-        echo '<pre>';
-        var_dump($result->data);
-        echo '</pre>';
+        // Show hashtag name
+        echo "<b>Hashtag:</b> #" . $hashtag . "<br />";
+
+        // Show 20 photos
+        foreach ($result->data as $data)
+        {
+            echo "<img src=".$data->images->low_resolution->url." alt=".$data->caption->text.">";
+        }
     }
 
 }
