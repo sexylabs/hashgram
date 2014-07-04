@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: victormartinez <martinezvcr@gmail.com>
+ * @author victormartinez <martinezvcr@gmail.com>
  * Date: 03/07/14
  * Time: 22:04
  */
