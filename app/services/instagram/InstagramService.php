@@ -1,9 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * @author victormartinez <martinezvcr@gmail.com>
- * Date: 03/07/14
- * Time: 22:04
+ * Instagram Service
+ *
+ * InstagramService is a class responsible for connecting with Instagram API.
+ *
+ * @author Victor Martinez <martinezvcr@gmail.com>
  */
 
 namespace App\Services\Instagram;
