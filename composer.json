@@ -1,7 +1,7 @@
 {
     "name": "Hashgram",
-    "description": "Build deployment script",
-    "version": "0.4.0",
+    "description": "Finish deploy feature and fix a little thing at load.routes.php",
+    "version": "0.4.1",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/victormartinez/hashgram",
     "authors": [
