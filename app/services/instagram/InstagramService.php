@@ -2,7 +2,7 @@
 /**
  * Instagram Service
  *
- * InstagramService is a class responsible for connecting with Instagram API.
+ * InstagramService is a class responsible for connecting the project with Instagram API.
  *
  * @author Victor Martinez <martinezvcr@gmail.com>
  */
@@ -12,7 +12,7 @@ namespace App\Services\Instagram;
 class InstagramService {
 
     /**
-     * @cons string
+     * @const string
      */
     const CLIENT_ID 	 = "d2c57fc594d84ccdb4e455beb5da6bd1";
 
