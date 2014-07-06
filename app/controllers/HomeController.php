@@ -24,7 +24,7 @@ class HomeController extends BasicController {
         });
 
         $instagram = $this->app->InstagramService;
-        $result = $instagram->getPhotosBasedOnTag($hashtag);
+        $result = $instagram->getPhotosByTag($hashtag);
 
 
         // Show hashtag name
