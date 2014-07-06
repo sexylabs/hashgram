@@ -147,12 +147,6 @@ class RouteManager{
                 $log = $this->app->getLog();
                 $log->warning($e);
                 $this->app->notFound();
-
-//                $a = array(
-//                    'class_name' => __CLASS__,
-//                    'method_name' => __FUNCTION__
-//                );
-//                $log->error(implode(', ', array_map(function ($v, $k) { return sprintf("%s='%s'", $k, $v); }, $a, array_keys($a))));
             }
         }
     }
