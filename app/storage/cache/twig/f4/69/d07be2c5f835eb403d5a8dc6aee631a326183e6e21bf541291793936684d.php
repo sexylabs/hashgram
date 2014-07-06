@@ -17,7 +17,7 @@ class __TwigTemplate_f469d07be2c5f835eb403d5a8dc6aee631a326183e6e21bf54129179393
         $_trait_0_blocks = $_trait_0->getBlocks();
 
         $_trait_1 = $this->env->loadTemplate("partials/layouts/default/javascripts.twig");
-        // line 23
+        // line 20
         if (!$_trait_1->isTraitable()) {
             throw new Twig_Error_Runtime('Template "'."partials/layouts/default/javascripts.twig".'" cannot be used as a trait.');
         }
@@ -57,30 +57,30 @@ class __TwigTemplate_f469d07be2c5f835eb403d5a8dc6aee631a326183e6e21bf54129179393
         // line 8
         echo "    ";
         $this->displayBlock('stylesheets', $context, $blocks);
-        // line 14
+        // line 11
         echo "</head>
 
 <body>
     ";
-        // line 17
+        // line 14
         $this->env->loadTemplate("partials/layouts/default/header.twig")->display($context);
-        // line 18
+        // line 15
         echo "
     ";
-        // line 19
+        // line 16
         $this->displayBlock('content', $context, $blocks);
-        // line 20
+        // line 17
+        echo "
+    ";
+        // line 18
+        $this->env->loadTemplate("partials/layouts/default/footer.twig")->display($context);
+        // line 19
         echo "
     ";
         // line 21
-        $this->env->loadTemplate("partials/layouts/default/footer.twig")->display($context);
-        // line 22
-        echo "
-    ";
-        // line 24
         echo "    ";
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 27
+        // line 24
         echo "</body>
 
 </html>";
@@ -93,21 +93,18 @@ class __TwigTemplate_f469d07be2c5f835eb403d5a8dc6aee631a326183e6e21bf54129179393
         echo "        ";
         $this->displayParentBlock("stylesheets", $context, $blocks);
         echo "
-        <style type=\"text/css\">
-            body {margin-top: 51px; }
-        </style>
     ";
     }
 
-    // line 19
+    // line 16
     public function block_content($context, array $blocks = array())
     {
     }
 
-    // line 24
+    // line 21
     public function block_javascripts($context, array $blocks = array())
     {
-        // line 25
+        // line 22
         echo "        ";
         $this->displayParentBlock("javascripts", $context, $blocks);
         echo "
@@ -126,6 +123,6 @@ class __TwigTemplate_f469d07be2c5f835eb403d5a8dc6aee631a326183e6e21bf54129179393
 
     public function getDebugInfo()
     {
-        return array (  111 => 25,  108 => 24,  103 => 19,  93 => 9,  90 => 8,  84 => 27,  81 => 24,  78 => 22,  76 => 21,  73 => 20,  71 => 19,  68 => 18,  66 => 17,  61 => 14,  55 => 6,  53 => 5,  44 => 1,  21 => 23,  14 => 7,  65 => 15,  58 => 8,  49 => 4,  46 => 9,  42 => 8,  39 => 7,  35 => 6,  31 => 4,  28 => 3,);
+        return array (  108 => 22,  105 => 21,  100 => 16,  93 => 9,  90 => 8,  84 => 24,  81 => 21,  78 => 19,  76 => 18,  73 => 17,  71 => 16,  68 => 15,  61 => 11,  58 => 8,  55 => 6,  53 => 5,  49 => 4,  44 => 1,  21 => 20,  14 => 7,  66 => 14,  59 => 14,  50 => 11,  47 => 10,  43 => 9,  40 => 8,  36 => 7,  31 => 4,  28 => 3,);
     }
 }

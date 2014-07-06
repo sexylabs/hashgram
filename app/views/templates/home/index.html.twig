@@ -2,16 +2,18 @@
 
 {% block content %}
 
-    <div class="container-fluid">
-        {% for photos in groupedPhotos %}
-            <div class="row">
-                {% for photo in photos %}
-                    <div class="col-xs-3 no-padding">
-                        <img src="{{ photo }}" class="img-responsive" />
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div> <!-- /container -->
+    <section id="main-content">
+        <div class="container-fluid">
+            {% for photos in groupedPhotos %}
+                <div class="row">
+                    {% for photo in photos %}
+                        <div class="col-xs-3 no-padding">
+                            <img src="{{ photo }}" class="img-responsive" />
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock content %}

@@ -1,7 +1,7 @@
 <?php
 
-/* templates/home/index.html.twig */
-class __TwigTemplate_af5f98bae6a9be29603ab1923005a05a225a342a3c84b3ae93c168ceb89e1e9d extends Twig_Template
+/* templates/home/index.html */
+class __TwigTemplate_980ada722f59dc14e53f6d6ad7df963e50a50951590098b3b7f6047c4e3047bc extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -29,47 +29,48 @@ class __TwigTemplate_af5f98bae6a9be29603ab1923005a05a225a342a3c84b3ae93c168ceb89
     {
         // line 4
         echo "
-    <div class=\"container-fluid\">
-        ";
-        // line 6
+    <section id=\"main-content\">
+        <div class=\"container-fluid\">
+            ";
+        // line 7
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["groupedPhotos"]) ? $context["groupedPhotos"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["photos"]) {
-            // line 7
-            echo "            <div class=\"row\">
-                ";
             // line 8
+            echo "                <div class=\"row\">
+                    ";
+            // line 9
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable((isset($context["photos"]) ? $context["photos"] : null));
             foreach ($context['_seq'] as $context["_key"] => $context["photo"]) {
-                // line 9
-                echo "                    <div class=\"col-xs-3 no-padding\">
-                        <img src=\"";
                 // line 10
+                echo "                        <div class=\"col-xs-3 no-padding\">
+                            <img src=\"";
+                // line 11
                 echo twig_escape_filter($this->env, (isset($context["photo"]) ? $context["photo"] : null), "html", null, true);
                 echo "\" class=\"img-responsive\" />
-                    </div>
-                ";
+                        </div>
+                    ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['photo'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 13
-            echo "            </div>
-        ";
+            // line 14
+            echo "                </div>
+            ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['photos'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 15
-        echo "    </div> <!-- /container -->
-
+        // line 16
+        echo "        </div> <!-- /container -->
+    </section>
 ";
     }
 
     public function getTemplateName()
     {
-        return "templates/home/index.html.twig";
+        return "templates/home/index.html";
     }
 
     public function isTraitable()
@@ -79,6 +80,6 @@ class __TwigTemplate_af5f98bae6a9be29603ab1923005a05a225a342a3c84b3ae93c168ceb89
 
     public function getDebugInfo()
     {
-        return array (  65 => 15,  58 => 13,  49 => 10,  46 => 9,  42 => 8,  39 => 7,  35 => 6,  31 => 4,  28 => 3,);
+        return array (  66 => 16,  59 => 14,  50 => 11,  47 => 10,  43 => 9,  40 => 8,  36 => 7,  31 => 4,  28 => 3,);
     }
 }
