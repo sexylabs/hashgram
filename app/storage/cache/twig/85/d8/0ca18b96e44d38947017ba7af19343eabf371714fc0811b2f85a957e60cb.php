@@ -26,10 +26,9 @@ class __TwigTemplate_85d80ca18b96e44d38947017ba7af19343eabf371714fc0811b2f85a957
         echo "    <meta charset=\"utf-8\">
     <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-    <meta name=\"description\" content=\"\">
-    <meta name=\"author\" content=\"Adriano Fialho & Victor Martinez\">
+    <meta name=\"description\" content=\"Instagram photos by hashtags\">
     <link rel=\"shortcut icon\" href=\"";
-        // line 7
+        // line 6
         echo twig_escape_filter($this->env, (isset($context["assetUri"]) ? $context["assetUri"] : null), "html", null, true);
         echo "/assets/global/ico/favicon.ico\">
 
@@ -39,7 +38,7 @@ class __TwigTemplate_85d80ca18b96e44d38947017ba7af19343eabf371714fc0811b2f85a957
     <![endif]-->
 
     ";
-        // line 14
+        // line 13
         $this->env->loadTemplate("partials/layouts/default/facebookOpenGraphTags.twig")->display($context);
     }
 
@@ -50,6 +49,6 @@ class __TwigTemplate_85d80ca18b96e44d38947017ba7af19343eabf371714fc0811b2f85a957
 
     public function getDebugInfo()
     {
-        return array (  43 => 14,  33 => 7,  26 => 2,  20 => 1,  110 => 24,  107 => 23,  102 => 18,  95 => 10,  92 => 9,  86 => 26,  83 => 23,  80 => 21,  78 => 20,  75 => 19,  73 => 18,  70 => 17,  68 => 16,  62 => 12,  59 => 9,  56 => 7,  54 => 6,  49 => 4,  44 => 1,  21 => 22,  14 => 8,);
+        return array (  42 => 13,  32 => 6,  30 => 4,  29 => 3,  26 => 2,  20 => 1,  137 => 51,  134 => 50,  129 => 45,  122 => 9,  119 => 8,  113 => 53,  110 => 50,  107 => 48,  105 => 47,  102 => 46,  100 => 45,  97 => 44,  95 => 43,  61 => 11,  58 => 8,  55 => 6,  53 => 5,  49 => 4,  44 => 1,  21 => 49,  14 => 7,  31 => 4,  28 => 3,);
     }
 }

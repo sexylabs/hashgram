@@ -23,7 +23,35 @@ class __TwigTemplate_6c9cf8be9e10995ae61c3ad62fc5532e47801ede8bcc957001a6eeafe55
     public function block_header($context, array $blocks = array())
     {
         // line 2
-        echo "    [HEADER]
+        echo "    <div class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\">
+        <div class=\"container-fluid\">
+            <div class=\"navbar-header col-xs-8 no-padding\">
+                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">
+                    <span class=\"sr-only\">Toggle navigation</span>
+                    <span class=\"icon-bar\"></span>
+                    <span class=\"icon-bar\"></span>
+                    <span class=\"icon-bar\"></span>
+                </button>
+                <form class=\"navbar-form no-padding\" role=\"form\">
+                    <div class=\"input-group width-full\">
+                        <span class=\"input-group-addon\">#</span>
+                        <input class=\"form-control width-full\" type=\"text\" placeholder=\"Digite uma #hashtag e descubra lindas fotos do Instagram\" />
+                        <span class=\"input-group-btn\">
+                            <button class=\"btn btn-primary\" type=\"button\">Go!</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class=\"navbar-collapse collapse\">
+                <a class=\"navbar-brand pull-right no-padding-right\" href=\"";
+        // line 22
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["app"]) ? $context["app"] : null), "urlFor", array(0 => "home"), "method"), "html", null, true);
+        echo "\">";
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["app"]) ? $context["app"] : null), "getName", array(), "method"), "html", null, true);
+        echo "</a>
+            </div><!--/.navbar-collapse -->
+        </div>
+    </div>
 ";
     }
 
@@ -34,6 +62,6 @@ class __TwigTemplate_6c9cf8be9e10995ae61c3ad62fc5532e47801ede8bcc957001a6eeafe55
 
     public function getDebugInfo()
     {
-        return array (  31 => 3,  26 => 2,  20 => 1,  194 => 34,  191 => 33,  183 => 29,  178 => 26,  170 => 23,  163 => 14,  160 => 13,  152 => 10,  144 => 7,  138 => 36,  135 => 33,  131 => 30,  128 => 29,  125 => 27,  123 => 26,  119 => 24,  116 => 23,  108 => 17,  105 => 16,  102 => 13,  99 => 11,  96 => 10,  93 => 8,  90 => 7,  85 => 4,  80 => 1,  49 => 32,  42 => 28,  35 => 7,  28 => 12,  21 => 9,  14 => 6,);
+        return array (  48 => 22,  26 => 2,  20 => 1,);
     }
 }

@@ -2,12 +2,14 @@
 <html lang="pt-br">
 <head>
     <title>{{ app.getName() }}</title>
-
     {% include "partials/layouts/default/head.twig" %}
 
     {% use "partials/layouts/default/stylesheets.twig" %}
     {% block stylesheets %}
         {{ parent() }}
+        <style type="text/css">
+            body {margin-top: 51px; }
+        </style>
     {% endblock stylesheets %}
 </head>
 
