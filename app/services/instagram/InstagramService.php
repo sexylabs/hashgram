@@ -45,7 +45,7 @@ class InstagramService {
      * @param string $tag
      * @return array
      */
-    public function getPhotosBasedOnTag($tag)
+    public function getPhotosByTag($tag)
     {
         if (self::CLIENT_ID)
         {
