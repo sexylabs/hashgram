@@ -11,34 +11,11 @@ namespace App\Services\Instagram;
 
 class InstagramService {
 
-    /**
-     * @const string
-     */
     const CLIENT_ID 	 = "d2c57fc594d84ccdb4e455beb5da6bd1";
-
-    /**
-     * @var string
-     */
     const CLIENT_SECRET  = "cbe1ee8d4c664f12b548f1a3c790024b";
-
-    /**
-     * @var string
-     */
     const CALLBACK       = "http://localhost:8888/instagram/instagram.class.php";
-
-    /**
-     * @var string
-     */
     const GRANT_TYPE     = "authorization_code";
-
-    /**
-     * @var string
-     */
     const API_URL_BASE   = "https://api.instagram.com/v1/";
-
-    /**
-     * @var string
-     */
     const OAUTH_URL_BASE = "https://api.instagram.com/oauth/";
 
     /**
