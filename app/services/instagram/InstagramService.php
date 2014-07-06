@@ -30,9 +30,12 @@ class InstagramService {
 
     public function __construct()
     {
-        if (empty(self::CLIENT_ID) || empty(self::CLIENT_SECRET) || empty(self::CALLBACK) || empty(self::GRANT_TYPE))
+        if (empty(self::CLIENT_ID)
+            || empty(self::CLIENT_SECRET)
+            || empty(self::CALLBACK)
+            || empty(self::GRANT_TYPE))
         {
-            echo "You need to set up the class before instantiating it.";
+            throw new \Exception("You need to set up the class before instantiating it. Please, provide the client_id, client_secret, call_back and grant_type");
         }
     }
 
