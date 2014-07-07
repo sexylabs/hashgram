@@ -1,7 +1,7 @@
 {
     "name": "Hashgram",
-    "description": "Build deployment script",
-    "version": "0.4.0",
+    "description": "Build responsive layout",
+    "version": "0.5.0",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/sexylabs/hashgram",
     "authors": [
