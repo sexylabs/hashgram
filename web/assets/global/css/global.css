@@ -1,0 +1,18 @@
+/*
+ * Global stylesheets
+ */
+
+/* Custom styles */
+body {margin-top: 51px; }
+
+
+/* APP-TITLE */
+.navbar-collapse .app-title{ margin-top: -10px !important; }
+.navbar-collapse .app-title a{ color: #777; }
+.navbar-collapse .app-title a:hover{ color: #5e5e5e; }
+
+
+/* MAIN CONTENT */
+section#main-content img{
+    background: url('../img/ajax-loader-4whitebg.gif') center center no-repeat #FFF;
+}
