@@ -27,7 +27,7 @@ $app->group('/', function () use ($app) {
 
             $app->get(str_replace('(/', '/(', $route['uriPattern']), function () use ($app, $route) {
                 $app->redirect('/'.$route['slug'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
-            })->name($route['slug']);
+            });
         }
     }
 

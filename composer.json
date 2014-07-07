@@ -3,7 +3,7 @@
     "description": "Finish deploy feature and fix a little thing at load.routes.php",
     "version": "0.4.1",
     "keywords": ["instagram", "photo", "party"],
-    "homepage": "https://github.com/victormartinez/hashgram",
+    "homepage": "https://github.com/sexylabs/hashgram",
     "authors": [
         {
             "name": "Adriano Fialho",

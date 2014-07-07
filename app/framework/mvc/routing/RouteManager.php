@@ -146,7 +146,7 @@ class RouteManager{
             }catch (\Exception $e){
                 $log = $this->app->getLog();
                 $log->warning($e);
-                $this->app->notFound();
+//                $this->app->notFound();
             }
         }
     }
