@@ -1,12 +1,7 @@
 {
     "name": "Hashgram",
-<<<<<<< HEAD
-    "description": "Finish deploy feature and fix a little thing at load.routes.php",
-    "version": "0.4.1",
-=======
     "description": "Build responsive layout",
     "version": "0.5.0",
->>>>>>> release/v0.5.0
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/sexylabs/hashgram",
     "authors": [
