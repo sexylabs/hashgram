@@ -9,7 +9,7 @@ class HomeController extends BasicController{
      * Shows photos on index.html.twig template
      */
     public function indexAction(){
-        $this->app->render('templates/home/index.html', array('groupedPhotos' => $this->getPhotos()));
+        $this->app->render('templates/home/index.html.twig', array('groupedPhotos' => $this->getPhotos()));
     }
 
     /**
