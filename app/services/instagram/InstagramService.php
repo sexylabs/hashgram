@@ -131,10 +131,8 @@ class InstagramService {
         }
         else
         {
-
+            return json_decode($result);
         }
-
-        return json_decode($result);
     }
 
     /**
