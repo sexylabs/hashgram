@@ -43,7 +43,7 @@ class InstagramService {
      * Return photos based on the tag
      *
      * @param string $tag
-     * @return array
+     * @return String
      */
     public function getPhotosByTag($tag)
     {
@@ -56,22 +56,39 @@ class InstagramService {
         }
         else
         {
-            echo "You must provide a client_id";
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
         }
+    }
+
+
+    public function getPopularPhotos()
+    {
+        if (self::CLIENT_ID)
+        {
+            $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
+            $options = array(CURLOPT_RETURNTRANSFER => true);
+
+            return $this->makeCurl($url, $options, false);
+        }
+        else
+        {
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+
+        }
+
+
     }
 
     /**
      * Create cURL based on the params
      *
-     * @param String $url
+     * @param string $url
      * @param array $option
-     * @param Bool $auth
-     * @return array
+     * @param bool $auth
+     * @return String
      */
     private function makeCurl($url, $option, $auth)
     {
-
-
         $cURL = curl_init($url);
 
         if ($auth)

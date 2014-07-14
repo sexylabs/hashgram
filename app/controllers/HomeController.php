@@ -15,28 +15,28 @@ class HomeController extends BasicController {
      */
     public function indexAction($hashtag)
     {
-
-        // If there is no hashtag parameter, $tag is assigned as "Salvador"
-        $hashtag = (empty($hashtag["_GET"]["hashtag"])) ? "Salvador" : $hashtag["_GET"]["hashtag"];
+        $hashtag = "Salvador";
 
         $this->app->container->singleton('InstagramService', function () {
             return new InstagramService();
         });
 
         $instagram = $this->app->InstagramService;
-        $result = $instagram->getPhotosByTag($hashtag);
 
-
-        // Show hashtag name
-        echo "<b>Hashtag:</b> #" . $hashtag . "<br />";
-
-        $result = json_decode($result, true);
-
-        // Show 20 photos
-        foreach ($result["data"] as $data)
+        if ($hashtag)
         {
-            echo "<img src=".$data["images"]["low_resolution"]["url"]." alt=".$data["caption"]["text"].">";
+            $result = $instagram->getPhotosByTag($hashtag);
         }
+        else
+        {
+            $result = $instagram->getPopularPhotos();
+        }
+
+        $options['data']    = $result->data;
+        $options['hashtag'] = $hashtag;
+
+        $this->app->view()->appendData($options);
+        $this->app->render('templates/home/index.html.twig');
     }
 
 }
