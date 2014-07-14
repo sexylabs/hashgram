@@ -1,0 +1,11 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block content %}
+    <b>Hashtag:</b> #{{ hashtag }}
+    <br/>
+
+    {% for data in data %}
+        <img src="{{ data.images.low_resolution.url }}" alt="{{ data.caption.text }}"/>
+    {% endfor %}
+
+{% endblock content %}
