@@ -1,9 +1,9 @@
 {
     "name": "Hashgram",
-    "description": "Build deployment script",
+    "description": "Service para integrar o projeto à API do Instagram. Issue #6.",
     "version": "0.4.0",
     "keywords": ["instagram", "photo", "party"],
-    "homepage": "https://github.com/victormartinez/hashgram",
+    "homepage": "https://github.com/sexylabs/hashgram",
     "authors": [
         {
             "name": "Adriano Fialho",

@@ -1,9 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: victormartinez <martinezvcr@gmail.com>
- * Date: 03/07/14
- * Time: 22:04
+ * Instagram Service
+ *
+ * InstagramService is a class responsible for connecting the project with Instagram API.
+ *
+ * @author Victor Martinez <martinezvcr@gmail.com>
  */
 
 namespace App\Services\Instagram;
@@ -14,28 +15,38 @@ class InstagramService {
     const CLIENT_SECRET  = "cbe1ee8d4c664f12b548f1a3c790024b";
     const CALLBACK       = "http://localhost:8888/instagram/instagram.class.php";
     const GRANT_TYPE     = "authorization_code";
-
     const API_URL_BASE   = "https://api.instagram.com/v1/";
     const OAUTH_URL_BASE = "https://api.instagram.com/oauth/";
 
+    /**
+     * @var string
+     */
     private $code;
+
+    /**
+     * @var string
+     */
     private $accessToken;
 
     public function __construct()
     {
-        if (empty(self::CLIENT_ID) || empty(self::CLIENT_SECRET) || empty(self::CALLBACK) || empty(self::GRANT_TYPE))
+        if (empty(self::CLIENT_ID)
+            || empty(self::CLIENT_SECRET)
+            || empty(self::CALLBACK)
+            || empty(self::GRANT_TYPE))
         {
-            echo "You need to set up the class before instantiating it.";
+            throw new \Exception("You need to set up the class before instantiating it. Please, provide the client_id, client_secret, call_back and grant_type");
         }
     }
 
     /**
      * Return photos based on the tag
      *
-     * @param string $tag
-     * @return array
+     * @param $tag
+     * @return String
+     * @throws \Exception
      */
-    public function getPhotosBasedOnTag($tag)
+    public function getPhotosByTag($tag)
     {
         if (self::CLIENT_ID)
         {
@@ -46,26 +57,55 @@ class InstagramService {
         }
         else
         {
-            echo "You must provide a client_id";
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+        }
+    }
+
+    /**
+     * Return popular photos
+     *
+     * @return String
+     * @throws \Exception
+     */
+    public function getPopularPhotos()
+    {
+        if (self::CLIENT_ID)
+        {
+            $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
+            $options = array(CURLOPT_RETURNTRANSFER => true);
+
+            try
+            {
+                return $this->makeCurl($url, $options, false);
+            }
+            catch (\Exception $e)
+            {
+                throw new \Exception($e->getMessage());
+            }
+        }
+        else
+        {
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+
         }
     }
 
     /**
      * Create cURL based on the params
      *
-     * @param String $url
-     * @param array $option
-     * @param Bool $auth
-     * @return array
+     * @param $url
+     * @param $option
+     * @param $auth
+     * @return mixed
+     * @throws \Exception
      */
     private function makeCurl($url, $option, $auth)
     {
-
-
         $cURL = curl_init($url);
 
         if ($auth)
         {
+            //TODO Implement the event of auth == TRUE
             $data = array(
                 'client_id'	    => self::CLIENT_ID,
                 'client_secret' => self::CLIENT_SECRET,
@@ -83,24 +123,53 @@ class InstagramService {
         $result = curl_exec($cURL);
         curl_close($cURL);
 
-        return json_decode($result);
+        $response = curl_getinfo($cURL, CURLINFO_HTTP_CODE);
+
+        if ($response == '404')
+        {
+            throw new \Exception("The Instagram API is unreachable");
+        }
+        else
+        {
+            return json_decode($result);
+        }
     }
 
+    /**
+     * Return the URL required to access Instagram API
+     *
+     * @return string
+     */
     public function getAuthorizationCodeUrl()
     {
         return self::AUTH_URL_BASE . "authorize/?client_id=" . self::CLIENT_ID . "&redirect_uri=" . self::CALLBACK . "&response_type=code";
     }
 
+    /**
+     * Set access token
+     *
+     * @param $token
+     */
     public function setAccessToken($token)
     {
         $this->accessToken = $token;
     }
 
+    /**
+     * Return the URL required to obtain the token
+     *
+     * @return string
+     */
     public function getAccessTokenUrl()
     {
         return self::OAUTH_URL_BASE . "access_token";
     }
 
+    /**
+     * Set code
+     *
+     * @param string
+     */
     public function setCode($code)
     {
         $this->code = $code;
