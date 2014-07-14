@@ -8,10 +8,7 @@ use App\Services\Instagram\InstagramService;
 class HomeController extends BasicController {
 
     /**
-     * Request photos based on hashtag
-     *
-     * @param string $hashtag
-     * @return array
+     *  Show popular photos on index.html.twig template
      */
     public function indexAction()
     {
@@ -19,15 +16,38 @@ class HomeController extends BasicController {
             return new InstagramService();
         });
 
-        $instagram = $this->app->InstagramService;
-        $result = $instagram->getPopularPhotos();
+        try
+        {
+            $instagram = $this->app->InstagramService;
 
-        $options['data']    = $result->data;
+            try
+            {
+                $result = $instagram->getPopularPhotos();
+                $options['data']    = $result->data;
 
-        $this->app->view()->appendData($options);
-        $this->app->render('templates/home/index.html.twig');
+                $this->app->view()->appendData($options);
+                $this->app->render('templates/home/index.html.twig');
+            }
+            catch (\Exception $e)
+            {
+                echo $e->getMessage();
+                $log = $this->app->getLog();
+                $log->warning($e);
+            }
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
+            $log = $this->app->getLog();
+            $log->warning($e);
+        }
     }
 
+    /**
+     * Show photos based on a hashtag on hashtag.html.twig template
+     *
+     * @param $hashtag
+     */
     public function hashtag($hashtag)
     {
         if ($hashtag)
@@ -36,14 +56,33 @@ class HomeController extends BasicController {
                 return new InstagramService();
             });
 
-            $instagram = $this->app->InstagramService;
-            $result = $instagram->getPhotosByTag($hashtag);
+            try
+            {
+                $instagram = $this->app->InstagramService;
 
-            $options['hashtag'] = $hashtag;
-            $options['data']    = $result->data;
+                try
+                {
+                    $result = $instagram->getPhotosByTag($hashtag);
 
-            $this->app->view()->appendData($options);
-            $this->app->render('templates/home/hashtag.html.twig');
+                    $options['hashtag'] = $hashtag;
+                    $options['data']    = $result->data;
+
+                    $this->app->view()->appendData($options);
+                    $this->app->render('templates/home/hashtag.html.twig');
+                }
+                catch (\Exception $e)
+                {
+                    echo $e->getMessage();
+                    $log = $this->app->getLog();
+                    $log->warning($e);
+                }
+            }
+            catch (\Exception $e)
+            {
+                echo $e->getMessage();
+                $log = $this->app->getLog();
+                $log->warning($e);
+            }
         }
         else
         {

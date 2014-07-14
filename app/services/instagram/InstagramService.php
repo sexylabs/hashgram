@@ -42,8 +42,9 @@ class InstagramService {
     /**
      * Return photos based on the tag
      *
-     * @param string $tag
+     * @param $tag
      * @return String
+     * @throws \Exception
      */
     public function getPhotosByTag($tag)
     {
@@ -60,7 +61,12 @@ class InstagramService {
         }
     }
 
-
+    /**
+     * Return popular photos
+     *
+     * @return String
+     * @throws \Exception
+     */
     public function getPopularPhotos()
     {
         if (self::CLIENT_ID)
@@ -68,24 +74,30 @@ class InstagramService {
             $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
             $options = array(CURLOPT_RETURNTRANSFER => true);
 
-            return $this->makeCurl($url, $options, false);
+            try
+            {
+                return $this->makeCurl($url, $options, false);
+            }
+            catch (\Exception $e)
+            {
+                throw new \Exception($e->getMessage());
+            }
         }
         else
         {
             throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
 
         }
-
-
     }
 
     /**
      * Create cURL based on the params
      *
-     * @param string $url
-     * @param array $option
-     * @param bool $auth
-     * @return String
+     * @param $url
+     * @param $option
+     * @param $auth
+     * @return mixed
+     * @throws \Exception
      */
     private function makeCurl($url, $option, $auth)
     {
@@ -93,6 +105,7 @@ class InstagramService {
 
         if ($auth)
         {
+            //TODO Implement the event of auth == TRUE
             $data = array(
                 'client_id'	    => self::CLIENT_ID,
                 'client_secret' => self::CLIENT_SECRET,
@@ -109,6 +122,17 @@ class InstagramService {
 
         $result = curl_exec($cURL);
         curl_close($cURL);
+
+        $response = curl_getinfo($cURL, CURLINFO_HTTP_CODE);
+
+        if ($response == '404')
+        {
+            throw new \Exception("The Instagram API is unreachable");
+        }
+        else
+        {
+
+        }
 
         return json_decode($result);
     }
