@@ -13,30 +13,41 @@ class HomeController extends BasicController {
      * @param string $hashtag
      * @return array
      */
-    public function indexAction($hashtag)
+    public function indexAction()
     {
-        $hashtag = "Salvador";
-
         $this->app->container->singleton('InstagramService', function () {
             return new InstagramService();
         });
 
         $instagram = $this->app->InstagramService;
-
-        if ($hashtag)
-        {
-            $result = $instagram->getPhotosByTag($hashtag);
-        }
-        else
-        {
-            $result = $instagram->getPopularPhotos();
-        }
+        $result = $instagram->getPopularPhotos();
 
         $options['data']    = $result->data;
-        $options['hashtag'] = $hashtag;
 
         $this->app->view()->appendData($options);
         $this->app->render('templates/home/index.html.twig');
     }
 
+    public function hashtag($hashtag)
+    {
+        if ($hashtag)
+        {
+            $this->app->container->singleton('InstagramService', function () {
+                return new InstagramService();
+            });
+
+            $instagram = $this->app->InstagramService;
+            $result = $instagram->getPhotosByTag($hashtag);
+
+            $options['hashtag'] = $hashtag;
+            $options['data']    = $result->data;
+
+            $this->app->view()->appendData($options);
+            $this->app->render('templates/home/hashtag.html.twig');
+        }
+        else
+        {
+            $this->indexAction();
+        }
+    }
 }
