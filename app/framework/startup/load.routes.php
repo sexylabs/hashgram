@@ -22,12 +22,12 @@ $app->group('/', function () use ($app) {
         }else{
             //Routes to others controllers
             $app->get($route['uriPattern'], function () use ($app, $route) {
-                Route::getInstance($app, $route, func_get_args());Route::getInstance($app, $route, func_get_args());
+                Route::getInstance($app, $route, func_get_args());
             })->name($route['slug']);
 
             $app->get(str_replace('(/', '/(', $route['uriPattern']), function () use ($app, $route) {
                 $app->redirect('/'.$route['slug'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
-            })->name($route['slug']);
+            });
         }
     }
 

@@ -1,7 +1,12 @@
 {
     "name": "Hashgram",
+<<<<<<< HEAD
     "description": "Service para integrar o projeto à API do Instagram. Issue #6.",
     "version": "0.4.0",
+=======
+    "description": "Build responsive layout",
+    "version": "0.5.0",
+>>>>>>> 2208b41a4564652e18e3a61a91341ed383dfb718
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/sexylabs/hashgram",
     "authors": [

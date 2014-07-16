@@ -4,11 +4,18 @@ namespace App\Framework\Deploy;
 
 class GitDeploy {
     /**
-     * A callback function to call after the deploy has finished.
+     * A callback function to call before the deploy has started.
      *
      * @var callback
      */
     public $beforeDeploy;
+
+    /**
+     * A callback function to call after the deploy has finished.
+     *
+     * @var callback
+     */
+    public $afterDeploy;
 
     /**
      * The name of the file that will be used for logging deployments.
@@ -83,6 +90,10 @@ class GitDeploy {
     public function execute()
     {
         try{
+            if (is_callable($this->beforeDeploy)){
+                call_user_func($this->beforeDeploy);
+            }
+
             // Discard any changes to tracked files since our last deploy
             $output = shell_exec('git reset --hard HEAD');
             $this->log('Reseting repository... '.$output);
@@ -95,12 +106,12 @@ class GitDeploy {
             $output = shell_exec('chmod -R og-rx .git');
             $this->log('Securing .git directory... '.$output);
 
-            if (is_callable($this->beforeDeploy)){
-                call_user_func($this->beforeDeploy);
-            }
-
             $this->log('Deployment successful!');
-        }catch (Exception $e){
+
+            if (is_callable($this->afterDeploy)){
+                call_user_func($this->afterDeploy);
+            }
+        }catch (\Exception $e){
             $this->log($e, 'ERROR');
         }
     }

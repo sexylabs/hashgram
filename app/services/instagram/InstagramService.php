@@ -51,7 +51,10 @@ class InstagramService {
         if (self::CLIENT_ID)
         {
             $url = self::API_URL_BASE . "tags/" . $tag . "/media/recent?client_id=" . self::CLIENT_ID;
-            $options = array(CURLOPT_RETURNTRANSFER => true);
+            $options = array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HEADER => true
+            );
 
             return $this->makeCurl($url,$options, false);
         }
@@ -105,7 +108,9 @@ class InstagramService {
 
         if ($auth)
         {
-            //TODO Implement the event of auth == TRUE
+            /*
+             * @TODO Implement the event of auth == TRUE
+             */
             $data = array(
                 'client_id'	    => self::CLIENT_ID,
                 'client_secret' => self::CLIENT_SECRET,
@@ -123,16 +128,38 @@ class InstagramService {
         $result = curl_exec($cURL);
         curl_close($cURL);
 
-        $response = curl_getinfo($cURL, CURLINFO_HTTP_CODE);
+        list($messageHeaders, $messageBody) = preg_split("/\r\n\r\n|\n\n|\r\r/", $result, 2);
+        $messageHeaders = $this->curlParseHeaders($messageHeaders);
 
-        if ($response == '404')
+        if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
         {
-            throw new \Exception("The Instagram API is unreachable");
+            // envio email para o time
+            throw new \Exception("The server is unreachable.");
         }
         else
         {
             return json_decode($result);
         }
+    }
+
+    /**
+     *
+     * @param array $messageHeaders
+     * @return array
+     */
+    private function curlParseHeaders($messageHeaders)
+    {
+        $headerLines = preg_split("/\r\n|\n|\r/", $messageHeaders);
+        $headers = array();
+        list(, $headers['http_status_code'], $headers['http_status_message']) = explode(' ', trim(array_shift($headerLines)), 3);
+        foreach ($headerLines as $headerLine)
+        {
+            list($name, $value) = explode(':', $headerLine, 2);
+            $name = strtolower($name);
+            $headers[$name] = trim($value);
+        }
+
+        return $headers;
     }
 
     /**

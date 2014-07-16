@@ -1,0 +1,19 @@
+/*
+ * Responsiveness
+ */
+
+/* Small devices (mobile) */
+@media (max-width: 768px) {
+    .navbar-brand{display: inline-block !important;}
+    .app-title{display: none;}
+}
+
+/* Medium devices (desktops) */
+@media (min-width: 769px) and (max-width: 1199px) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px){
+
+}
