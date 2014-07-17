@@ -82,13 +82,17 @@ class RouteManager{
      */
     private function buildArgsAndParams($args)
     {
+        //remove action name argument
+        unset($args[0][0]);
+
         //remove the last array element if is void
         if(empty($args[0][count($args[0]) - 1])){
             unset($args[0][count($args[0]) - 1]);
         }
 
-        $argsReIndexed['params'] = ($args[0] ? $args[0] : array());
-        $argsReIndexed['_GET']   = self::getUrlParams();
+        $argsReIndexed['_PARAMS'] = ($args[0] ? $args[0] : array());
+        $argsReIndexed['_POST']   = $args['_POST'];
+        $argsReIndexed['_GET']    = self::getUrlParams();
 
         return $argsReIndexed;
     }

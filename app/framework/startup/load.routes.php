@@ -15,15 +15,71 @@ $app->group('/', function () use ($app) {
 
     foreach($routes as $route){
         if(empty($route['uriPattern'])){
-            //Routes to home path "/"
+            //ROUTES TO HOME ("/") URL PATH
+            //GET ROUTE
             $app->get($route['uriPattern'], function () use ($app, $route) {
-                Route::getInstance($app, $route, func_get_args());
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
             })->name($route['slug']);
+
+            //POST ROUTE
+            $app->post($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
+
+            //PUT ROUTE
+            $app->put($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
+
+            //DELETE ROUTE
+            $app->delete($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
         }else{
-            //Routes to others controllers
+            //ROUTE FOR OTHER CONTROLLERS
+            //GET ROUTE
             $app->get($route['uriPattern'], function () use ($app, $route) {
-                Route::getInstance($app, $route, func_get_args());
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
             })->name($route['slug']);
+
+            //POST ROUTE
+            $app->post($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
+
+            //PUT ROUTE
+            $app->put($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
+
+            //DELETE ROUTE
+            $app->delete($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
 
             $app->get(str_replace('(/', '/(', $route['uriPattern']), function () use ($app, $route) {
                 $app->redirect('/'.$route['slug'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
