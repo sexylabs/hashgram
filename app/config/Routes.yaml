@@ -23,6 +23,16 @@
     action:     'list'
 
 ##
+# Home Routes
+-
+  name: 'Hashtag Routes'
+  slug: 'list'
+  uriPattern: 'hashtag/list'
+  defaults:
+    controller: 'Hashtag'
+    action:     'list'
+
+##
 # Demo Routes
 -
   name: 'Demo Routes'
