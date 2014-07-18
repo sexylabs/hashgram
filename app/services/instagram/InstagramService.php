@@ -30,10 +30,15 @@ class InstagramService {
 
     public function __construct()
     {
-        if (empty(self::CLIENT_ID)
-            || empty(self::CLIENT_SECRET)
-            || empty(self::CALLBACK)
-            || empty(self::GRANT_TYPE))
+        $client_id     = constant(self::CLIENT_ID);
+        $client_secret = constant(self::CLIENT_SECRET);
+        $callback      = constant(self::CALLBACK);
+        $grant_type    = constant(self::GRANT_TYPE);
+
+        if (empty($client_id)
+            || empty($client_secret)
+            || empty($callback)
+            || empty($grant_type))
         {
             throw new \Exception("You need to set up the class before instantiating it. Please, provide the client_id, client_secret, call_back and grant_type");
         }
@@ -48,7 +53,8 @@ class InstagramService {
      */
     public function getPhotosByTag($tag)
     {
-        if (self::CLIENT_ID)
+        $client_id     = constant(self::CLIENT_ID);
+        if ($client_id)
         {
             $url = self::API_URL_BASE . "tags/" . $tag . "/media/recent?client_id=" . self::CLIENT_ID;
             $options = array(
@@ -72,7 +78,8 @@ class InstagramService {
      */
     public function getPopularPhotos()
     {
-        if (self::CLIENT_ID)
+        $client_id     = constant(self::CLIENT_ID);
+        if ($client_id)
         {
             $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
             $options = array(
