@@ -30,10 +30,10 @@ class InstagramService {
 
     public function __construct()
     {
-        $client_id     = constant(self::CLIENT_ID);
-        $client_secret = constant(self::CLIENT_SECRET);
-        $callback      = constant(self::CALLBACK);
-        $grant_type    = constant(self::GRANT_TYPE);
+        $client_id     = self::CLIENT_ID;
+        $client_secret = self::CLIENT_SECRET;
+        $callback      = self::CALLBACK;
+        $grant_type    = self::GRANT_TYPE;
 
         if (empty($client_id)
             || empty($client_secret)
@@ -53,7 +53,7 @@ class InstagramService {
      */
     public function getPhotosByTag($tag)
     {
-        $client_id     = constant(self::CLIENT_ID);
+        $client_id     = self::CLIENT_ID;
         if ($client_id)
         {
             $url = self::API_URL_BASE . "tags/" . $tag . "/media/recent?client_id=" . self::CLIENT_ID;
@@ -78,7 +78,7 @@ class InstagramService {
      */
     public function getPopularPhotos()
     {
-        $client_id     = constant(self::CLIENT_ID);
+        $client_id     = self::CLIENT_ID;
         if ($client_id)
         {
             $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
