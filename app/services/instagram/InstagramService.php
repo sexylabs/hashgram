@@ -75,7 +75,10 @@ class InstagramService {
         if (self::CLIENT_ID)
         {
             $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
-            $options = array(CURLOPT_RETURNTRANSFER => true);
+            $options = array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HEADER => true
+            );
 
             try
             {
@@ -138,7 +141,7 @@ class InstagramService {
         }
         else
         {
-            return json_decode($result);
+            return json_decode($messageBody);
         }
     }
 

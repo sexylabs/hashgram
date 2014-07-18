@@ -14,7 +14,7 @@ class HashtagController extends BasicController {
      */
     public function listAction($params)
     {
-        $hashtag = $params["params"][0];
+        $hashtag = $this->app->request()->post('hashtag');
 
         if ($hashtag)
         {
@@ -31,7 +31,7 @@ class HashtagController extends BasicController {
                     $result = $instagram->getPhotosByTag($hashtag);
 
                     $options['hashtag'] = $hashtag;
-                    $options['data']    = $result->data;
+                    $options['result']  = $result->data;
 
                     $this->app->view()->appendData($options);
                     $this->app->render('templates/home/hashtag.html.twig');
