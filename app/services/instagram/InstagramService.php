@@ -30,15 +30,10 @@ class InstagramService {
 
     public function __construct()
     {
-        $client_id     = self::CLIENT_ID;
-        $client_secret = self::CLIENT_SECRET;
-        $callback      = self::CALLBACK;
-        $grant_type    = self::GRANT_TYPE;
-
-        if (empty($client_id)
-            || empty($client_secret)
-            || empty($callback)
-            || empty($grant_type))
+        if (!defined('self::CLIENT_ID')
+            || !defined('self::CLIENT_SECRET')
+            || !defined('self::CALLBACK')
+            || !defined('self::GRANT_TYPE'))
         {
             throw new \Exception("You need to set up the class before instantiating it. Please, provide the client_id, client_secret, call_back and grant_type");
         }
