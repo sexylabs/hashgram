@@ -31,23 +31,20 @@ class HashtagController extends BasicController {
          * $hashtag = $params['_POST']
          * PS: depois de ler, pode apagar este comentário
          */
-        $hashtag = $this->app->request()->post('hashtag');
+        $hashtag = $this->app->request()->params('hashtag');
 
-        if ($hashtag){
-            try{
-                $this->injectDependencies();
-                $result = $this->instagramService->getPhotosByTag($hashtag);
+        try{
+            $this->injectDependencies();
+            $result = $this->instagramService->getPhotosByTag($hashtag);
 
-                $this->app->render('templates/home/hashtag.html.twig', array(
-                    'hashtag' => $hashtag,
-                    'photos' => $result->data
-                ));
-            }catch (\Exception $e){
-                //TODO: o que será feito em caso de erro?
-                $log = $this->app->getLog();
-                $log->warning($e);
-            }
-        }else{
+            $this->app->render('templates/home/hashtag.html.twig', array(
+                'hashtag' => $hashtag,
+                'photos' => $result->data
+            ));
+        }catch (\Exception $e){
+            $log = $this->app->getLog();
+            $log->warning($e);
+            //TODO: o que será feito em caso de erro?
             $this->app->redirect('/');
         }
     }
