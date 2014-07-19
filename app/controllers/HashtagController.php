@@ -28,7 +28,8 @@ class HashtagController extends BasicController {
     public function listAction($params){
         /**
          * Uma outra maneira de pegar as variáveis do POST é assim:
-         * $hashtah = $params['_POST']
+         * $hashtag = $params['_POST']
+         * PS: depois de ler, pode apagar este comentário
          */
         $hashtag = $this->app->request()->post('hashtag');
 
@@ -42,7 +43,7 @@ class HashtagController extends BasicController {
                     'photos' => $result->data
                 ));
             }catch (\Exception $e){
-                echo $e->getMessage();
+                //TODO: o que será feito em caso de erro?
                 $log = $this->app->getLog();
                 $log->warning($e);
             }
