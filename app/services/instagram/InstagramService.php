@@ -53,7 +53,7 @@ class InstagramService {
                 else
                 {
                     $result["success"]  = FALSE;
-                    $result["message"]  = "Unfortunately we couldn't find any photo with the hashtag '{$hashtag}'.";
+                    $result["message"]  = "Unfortunately we couldn't find any photo with the hashtag '{$tag}'.";
                 }
 
                 return $this->makeCurl($url,$options, false);
