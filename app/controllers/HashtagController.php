@@ -30,6 +30,7 @@ class HashtagController extends BasicController {
                 {
                     $result = $instagram->getPhotosByTag($hashtag);
 
+                    $options['hashtag'] = $hashtag;
                     $options['success'] = $result["success"];
                     $options['result']  = $result["data"];
                     $options['message'] = $result["message"];
