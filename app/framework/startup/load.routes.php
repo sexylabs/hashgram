@@ -19,6 +19,13 @@ $app->group('/', function () use ($app) {
             $app->get($route['uriPattern'], function () use ($app, $route) {
                 Route::getInstance($app, $route, func_get_args());
             })->name($route['slug']);
+
+            $app->post($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
+            });
         }else{
             //Routes to others controllers
             $app->get($route['uriPattern'], function () use ($app, $route) {
@@ -27,6 +34,13 @@ $app->group('/', function () use ($app) {
 
             $app->get(str_replace('(/', '/(', $route['uriPattern']), function () use ($app, $route) {
                 $app->redirect('/'.$route['slug'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
+            });
+
+            $app->post($route['uriPattern'], function () use ($app, $route) {
+                $urlArgs          = func_get_args();
+                $urlArgs['_POST'] = ($_POST ? $_POST : array());
+
+                Route::getInstance($app, $route, $urlArgs);
             });
         }
     }
