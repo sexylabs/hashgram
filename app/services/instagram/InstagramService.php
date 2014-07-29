@@ -56,7 +56,7 @@ class InstagramService {
                     $result["message"]  = "Unfortunately we couldn't find any photo with the hashtag '{$tag}'.";
                 }
 
-                return $this->makeCurl($url,$options, false);
+                return $result;
             }
             catch (\Exception $e)
             {
