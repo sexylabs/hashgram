@@ -30,8 +30,9 @@ class HashtagController extends BasicController {
                 {
                     $result = $instagram->getPhotosByTag($hashtag);
 
-                    $options['hashtag'] = $hashtag;
-                    $options['result']  = $result->data;
+                    $options['success'] = $result["success"];
+                    $options['result']  = $result["data"];
+                    $options['message'] = $result["message"];
 
                     $this->app->view()->appendData($options);
                     $this->app->render('templates/home/hashtag.html.twig');

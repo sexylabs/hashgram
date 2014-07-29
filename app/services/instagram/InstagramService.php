@@ -26,7 +26,7 @@ class InstagramService {
      * Return photos based on the tag
      *
      * @param $tag
-     * @return String
+     * @return array
      * @throws \Exception
      */
     public function getPhotosByTag($tag)
@@ -39,7 +39,30 @@ class InstagramService {
                 CURLOPT_HEADER => true
             );
 
-            return $this->makeCurl($url,$options, false);
+            try
+            {
+                $curlResult = $this->makeCurl($url,$options, false);
+
+                $result["data"] = $curlResult->data;
+
+                if (!empty($result["data"]))
+                {
+                    $result["success"]  = TRUE;
+                    $result["message"]  = "";
+                }
+                else
+                {
+                    $result["success"]  = FALSE;
+                    $result["message"]  = "Unfortunately we couldn't find any photo with the hashtag '{$tag}'.";
+                }
+
+                return $result;
+            }
+            catch (\Exception $e)
+            {
+                throw new \Exception($e->getMessage());
+            }
+
         }
         else
         {
