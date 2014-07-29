@@ -16,9 +16,9 @@ class InstagramService {
 
     public function __construct()
     {
-        if (!self::CLIENT_ID)
+        if (!defined('self::CLIENT_ID'))
         {
-            throw new \Exception("You need to set up the class before instantiating it. Please, provide the client_id, client_secret, call_back and grant_type");
+            throw new \Exception("You need to set up the class before instantiating it. Please, provide the CLIENT_ID.");
         }
     }
 
@@ -31,7 +31,7 @@ class InstagramService {
      */
     public function getPhotosByTag($tag)
     {
-        if (self::CLIENT_ID)
+        if (defined('self::CLIENT_ID'))
         {
             $url = self::API_URL_BASE . "tags/" . $tag . "/media/recent?client_id=" . self::CLIENT_ID;
             $options = array(
@@ -43,7 +43,7 @@ class InstagramService {
         }
         else
         {
-            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos.");
         }
     }
 
@@ -55,7 +55,7 @@ class InstagramService {
      */
     public function getPopularPhotos()
     {
-        if (self::CLIENT_ID)
+        if (defined('self::CLIENT_ID'))
         {
             $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
             $options = array(
@@ -74,7 +74,7 @@ class InstagramService {
         }
         else
         {
-            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos.");
 
         }
     }
@@ -91,7 +91,6 @@ class InstagramService {
     private function makeCurl($url, $option, $auth)
     {
         $cURL = curl_init($url);
-
         foreach ($option as $key => $value)
         {
             curl_setopt($cURL, $key, $value);
@@ -105,7 +104,9 @@ class InstagramService {
 
         if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
         {
-            //@TODO Send e-mail to the team
+            /*
+             * @TODO Send email to the team
+             */
             throw new \Exception("The server is unreachable.");
         }
         else
