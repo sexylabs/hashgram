@@ -12,30 +12,13 @@ namespace App\Services\Instagram;
 class InstagramService {
 
     const CLIENT_ID 	 = "d2c57fc594d84ccdb4e455beb5da6bd1";
-    const CLIENT_SECRET  = "cbe1ee8d4c664f12b548f1a3c790024b";
-    const CALLBACK       = "http://localhost:8888/instagram/instagram.class.php";
-    const GRANT_TYPE     = "authorization_code";
     const API_URL_BASE   = "https://api.instagram.com/v1/";
-    const OAUTH_URL_BASE = "https://api.instagram.com/oauth/";
-
-    /**
-     * @var string
-     */
-    private $code;
-
-    /**
-     * @var string
-     */
-    private $accessToken;
 
     public function __construct()
     {
-        if (!defined('self::CLIENT_ID')
-            || !defined('self::CLIENT_SECRET')
-            || !defined('self::CALLBACK')
-            || !defined('self::GRANT_TYPE'))
+        if (!defined('self::CLIENT_ID'))
         {
-            throw new \Exception("You need to set up the class before instantiating it. Please, provide the client_id, client_secret, call_back and grant_type");
+            throw new \Exception("You need to set up the class before instantiating it. Please, provide the CLIENT_ID.");
         }
     }
 
@@ -43,13 +26,12 @@ class InstagramService {
      * Return photos based on the tag
      *
      * @param $tag
-     * @return String
+     * @return array
      * @throws \Exception
      */
     public function getPhotosByTag($tag)
     {
-        $client_id     = self::CLIENT_ID;
-        if ($client_id)
+        if (defined('self::CLIENT_ID'))
         {
             $url = self::API_URL_BASE . "tags/" . $tag . "/media/recent?client_id=" . self::CLIENT_ID;
             $options = array(
@@ -57,24 +39,46 @@ class InstagramService {
                 CURLOPT_HEADER => true
             );
 
-            return $this->makeCurl($url,$options, false);
+            try
+            {
+                $curlResult = $this->makeCurl($url,$options, false);
+
+                $result["data"] = $curlResult->data;
+
+                if (!empty($result["data"]))
+                {
+                    $result["success"]  = TRUE;
+                    $result["message"]  = "";
+                }
+                else
+                {
+                    $result["success"]  = FALSE;
+                    $result["message"]  = "Unfortunately we couldn't find any photo with the hashtag '{$tag}'.";
+                }
+
+                return $result;
+            }
+            catch (\Exception $e)
+            {
+                throw new \Exception($e->getMessage());
+            }
+
         }
         else
         {
-            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos.");
         }
     }
 
     /**
      * Return popular photos
      *
-     * @return String
+     * @return array
      * @throws \Exception
      */
     public function getPopularPhotos()
     {
-        $client_id     = self::CLIENT_ID;
-        if ($client_id)
+        if (defined('self::CLIENT_ID'))
         {
             $url = self::API_URL_BASE . 'media/popular?client_id='. self::CLIENT_ID;
             $options = array(
@@ -84,7 +88,22 @@ class InstagramService {
 
             try
             {
-                return $this->makeCurl($url, $options, false);
+                $curlResult = $this->makeCurl($url, $options, false);
+
+                $result["data"] = $curlResult->data;
+
+                if (!empty($result["data"]))
+                {
+                    $result["success"]  = TRUE;
+                    $result["message"]  = "";
+                }
+                else
+                {
+                    $result["success"]  = FALSE;
+                    $result["message"]  = "Unfortunately we couldn't find the most popular photos..";
+                }
+
+                return $result;
             }
             catch (\Exception $e)
             {
@@ -93,7 +112,7 @@ class InstagramService {
         }
         else
         {
-            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos");
+            throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos.");
 
         }
     }
@@ -110,21 +129,6 @@ class InstagramService {
     private function makeCurl($url, $option, $auth)
     {
         $cURL = curl_init($url);
-
-        if ($auth)
-        {
-            /*
-             * @TODO Implement the event of auth == TRUE
-             */
-            $data = array(
-                'client_id'	    => self::CLIENT_ID,
-                'client_secret' => self::CLIENT_SECRET,
-                'grant_type'    => self::GRANT_TYPE,
-                'redirect_uri'  => self::CALLBACK,
-                'code' 			=> $this->code
-            );
-        }
-
         foreach ($option as $key => $value)
         {
             curl_setopt($cURL, $key, $value);
@@ -138,7 +142,9 @@ class InstagramService {
 
         if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
         {
-            // envio email para o time
+            /*
+             * @TODO Send email to the team
+             */
             throw new \Exception("The server is unreachable.");
         }
         else
@@ -166,45 +172,4 @@ class InstagramService {
 
         return $headers;
     }
-
-    /**
-     * Return the URL required to access Instagram API
-     *
-     * @return string
-     */
-    public function getAuthorizationCodeUrl()
-    {
-        return self::AUTH_URL_BASE . "authorize/?client_id=" . self::CLIENT_ID . "&redirect_uri=" . self::CALLBACK . "&response_type=code";
-    }
-
-    /**
-     * Set access token
-     *
-     * @param $token
-     */
-    public function setAccessToken($token)
-    {
-        $this->accessToken = $token;
-    }
-
-    /**
-     * Return the URL required to obtain the token
-     *
-     * @return string
-     */
-    public function getAccessTokenUrl()
-    {
-        return self::OAUTH_URL_BASE . "access_token";
-    }
-
-    /**
-     * Set code
-     *
-     * @param string
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
-
 } 

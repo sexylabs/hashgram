@@ -3,6 +3,22 @@
 {% block content %}
     <section id="main-content">
         <div class="container-fluid">
+
+            {#{{ result|length }}#}
+            {#{{ dump(result[0].images.low_resolution.url) }}#}
+            {#{{ dump(result[1].images.low_resolution.url) }}#}
+            {#{{ dump(result[2].images.low_resolution.url) }}#}
+
+            {% if success == false %}
+                Aqui: {{ success }}
+                <div class="row">
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+
+            {% endif %}
+
             {% set index = 0 %}
 
             {% for i in 0..4 %}
