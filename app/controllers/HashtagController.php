@@ -15,6 +15,7 @@ class HashtagController extends BasicController {
     public function listAction($params)
     {
         $hashtag = $this->app->request()->post('hashtag');
+        $hashtag = str_replace('#', '', $hashtag);
 
         if ($hashtag)
         {
