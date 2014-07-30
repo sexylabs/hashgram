@@ -41,21 +41,35 @@ class HashtagController extends BasicController {
                 }
                 catch (\Exception $e)
                 {
-                    echo $e->getMessage();
                     $log = $this->app->getLog();
                     $log->warning($e);
+
+                    $options['success'] = FALSE;
+                    $options['message'] = $e->getMessage();
+
+                    $this->app->view()->appendData($options);
+                    $this->app->render('templates/home/hashtag.html.twig');
                 }
             }
             catch (\Exception $e)
             {
-                echo $e->getMessage();
                 $log = $this->app->getLog();
                 $log->warning($e);
+
+                $options['success'] = FALSE;
+                $options['message'] = $e->getMessage();
+
+                $this->app->view()->appendData($options);
+                $this->app->render('templates/home/hashtag.html.twig');
             }
         }
         else
         {
-            $this->app->redirect('/');
+            $options['success'] = FALSE;
+            $options['message'] = "You haven't provided any hashtag.";
+
+            $this->app->view()->appendData($options);
+            $this->app->render('templates/home/hashtag.html.twig');
         }
     }
 }

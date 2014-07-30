@@ -23,22 +23,36 @@ class HomeController extends BasicController {
             try
             {
                 $result = $instagram->getPopularPhotos();
-                $options['result']    = $result->data;
 
-                $this->app->render('templates/home/index.html.twig', $options);
+                $options['success'] = $result["success"];
+                $options['result']  = $result["data"];
+                $options['message'] = $result["message"];
+
+                $this->app->view()->appendData($options);
+                $this->app->render('templates/home/index.html.twig');
             }
             catch (\Exception $e)
             {
-                echo $e->getMessage();
                 $log = $this->app->getLog();
                 $log->warning($e);
+
+                $options['success'] = FALSE;
+                $options['message'] = $e->getMessage();
+
+                $this->app->view()->appendData($options);
+                $this->app->render('templates/home/index.html.twig');
             }
         }
         catch (\Exception $e)
         {
-            echo $e->getMessage();
             $log = $this->app->getLog();
             $log->warning($e);
+
+            $options['success'] = FALSE;
+            $options['message'] = $e->getMessage();
+
+            $this->app->view()->appendData($options);
+            $this->app->render('templates/home/index.html.twig');
         }
     }
 }
