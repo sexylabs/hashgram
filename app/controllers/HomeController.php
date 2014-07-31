@@ -8,37 +8,46 @@ use App\Services\Instagram\InstagramService;
 class HomeController extends BasicController {
 
     /**
-     *  Show popular photos on index.html.twig template
+     * @var \App\Services\Instagram\InstagramService
      */
-    public function indexAction()
-    {
+    private $instagramService;
+
+    public function injectDependencies(){
         $this->app->container->singleton('InstagramService', function () {
             return new InstagramService();
         });
 
+        $this->instagramService = $this->app->InstagramService;
+    }
+
+    /**
+     *  Show popular photos on index.html.twig template
+     */
+    public function indexAction()
+    {
         try
         {
-            $instagram = $this->app->InstagramService;
+            $this->injectDependencies();
 
-            try
-            {
-                $result = $instagram->getPopularPhotos();
-                $options['result']    = $result->data;
+            $result = $this->instagramService->getPopularPhotos();
 
-                $this->app->render('templates/home/index.html.twig', $options);
-            }
-            catch (\Exception $e)
-            {
-                echo $e->getMessage();
-                $log = $this->app->getLog();
-                $log->warning($e);
-            }
+            $options['success'] = $result["success"];
+            $options['result']  = $result["data"];
+            $options['message'] = $result["message"];
+
+            $this->app->view()->appendData($options);
+            $this->app->render('templates/home/index.html.twig');
         }
         catch (\Exception $e)
         {
-            echo $e->getMessage();
             $log = $this->app->getLog();
             $log->warning($e);
+
+            $options['success'] = FALSE;
+            $options['message'] = $e->getMessage();
+
+            $this->app->view()->appendData($options);
+            $this->app->render('templates/home/index.html.twig');
         }
     }
 }

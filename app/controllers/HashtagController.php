@@ -25,27 +25,48 @@ class HashtagController extends BasicController {
      *
      * @param $params
      */
-    public function listAction($params){
-        /**
-         * Uma outra maneira de pegar as variáveis do POST é assim:
-         * $hashtag = $params['_POST']
-         * PS: depois de ler, pode apagar este comentário
-         */
-        $hashtag = $this->app->request()->params('hashtag');
 
-        try{
-            $this->injectDependencies();
-            $result = $this->instagramService->getPhotosByTag($hashtag);
+    public function listAction($params)
+    {
+        // Could get by $params['_POST']
+        $hashtag = $this->app->request()->post('hashtag');
+        $hashtag = str_replace('#', '', $hashtag);
 
-            $this->app->render('templates/home/hashtag.html.twig', array(
-                'hashtag' => $hashtag,
-                'photos' => $result->data
-            ));
-        }catch (\Exception $e){
-            $log = $this->app->getLog();
-            $log->warning($e);
-            //TODO: o que será feito em caso de erro?
-            $this->app->redirect('/');
+        if ($hashtag)
+        {
+            try
+            {
+                $this->injectDependencies();
+
+                $result = $this->instagramService->getPhotosByTag($hashtag);
+
+                $options['hashtag'] = $hashtag;
+                $options['success'] = $result["success"];
+                $options['result']  = $result["data"];
+                $options['message'] = $result["message"];
+
+                $this->app->view()->appendData($options);
+                $this->app->render('templates/home/hashtag.html.twig');
+            }
+            catch (\Exception $e)
+            {
+                $log = $this->app->getLog();
+                $log->warning($e);
+
+                $options['success'] = FALSE;
+                $options['message'] = $e->getMessage();
+
+                $this->app->view()->appendData($options);
+                $this->app->render('templates/home/hashtag.html.twig');
+            }
+        }
+        else
+        {
+            $options['success'] = FALSE;
+            $options['message'] = "You haven't provided any hashtag.";
+
+            $this->app->view()->appendData($options);
+            $this->app->render('templates/home/hashtag.html.twig');
         }
     }
 }
