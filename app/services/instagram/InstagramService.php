@@ -140,7 +140,8 @@ class InstagramService {
         list($messageHeaders, $messageBody) = preg_split("/\r\n\r\n|\n\n|\r\r/", $result, 2);
         $messageHeaders = $this->curlParseHeaders($messageHeaders);
 
-        if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
+//        if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
+        if ($messageHeaders['http_status_code'] >= 400)
         {
             /*
              * @TODO Send email to the team
