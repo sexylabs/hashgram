@@ -73,7 +73,7 @@ class InstagramService {
     /**
      * Return popular photos
      *
-     * @return String
+     * @return array
      * @throws \Exception
      */
     public function getPopularPhotos()
@@ -88,7 +88,22 @@ class InstagramService {
 
             try
             {
-                return $this->makeCurl($url, $options, false);
+                $curlResult = $this->makeCurl($url, $options, false);
+
+                $result["data"] = $curlResult->data;
+
+                if (!empty($result["data"]))
+                {
+                    $result["success"]  = TRUE;
+                    $result["message"]  = "";
+                }
+                else
+                {
+                    $result["success"]  = FALSE;
+                    $result["message"]  = "Unfortunately we couldn't find the most popular photos..";
+                }
+
+                return $result;
             }
             catch (\Exception $e)
             {
@@ -125,7 +140,8 @@ class InstagramService {
         list($messageHeaders, $messageBody) = preg_split("/\r\n\r\n|\n\n|\r\r/", $result, 2);
         $messageHeaders = $this->curlParseHeaders($messageHeaders);
 
-        if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
+//        if (isset($messageBody['error']) or ($messageHeaders['http_status_code'] >= 400))
+        if ($messageHeaders['http_status_code'] >= 400)
         {
             /*
              * @TODO Send email to the team

@@ -75,7 +75,7 @@ class RouteManager{
 
     /**
      * Build array $args in format:
-     * array( 'params' => array(), '_GET' => array() )
+     * array( '_PARAMS' => array(), '_POST' => array(), '_GET' => array() )
      *
      * @param array $args
      * @return array
@@ -87,8 +87,9 @@ class RouteManager{
             unset($args[0][count($args[0]) - 1]);
         }
 
-        $argsReIndexed['params'] = ($args[0] ? $args[0] : array());
-        $argsReIndexed['_GET']   = self::getUrlParams();
+        $argsReIndexed['_PARAMS'] = ($args[0] ? $args[0] : array());
+        $argsReIndexed['_POST']   = $args['_POST'];
+        $argsReIndexed['_GET']    = self::getUrlParams();
 
         return $argsReIndexed;
     }
@@ -117,36 +118,34 @@ class RouteManager{
     }
 
     /**
-     * Includes controller file
+     * * Includes controller file
      * Extracts action name from $this->routeArgs
      * Instantiate controller Object
      * Call action passing $args
      *
-     * @return mixed
+     * @throws \BadMethodCallException
      */
     private function buildRoute()
     {
         if($this->includeControllerFile()){
-            try{
-                    $args            = $this->getRouteArgs();
-                    $this->action    = (count($args['params']) ? array_shift($args['params']) : $this->defaultAction);
-                    $controllerClass = $this->getController();
+            $args            = $this->getRouteArgs();
+            $this->action    = (count($args['_PARAMS']) ? array_shift($args['_PARAMS']) : $this->defaultAction);
+            $controllerClass = $this->getController();
 
-                    $controllerObj = new $controllerClass($this->getApp());
-                    $callAction    = strtolower($this->action)."Action";
+            $controllerObj = new $controllerClass($this->getApp());
+            $callAction    = strtolower($this->action)."Action";
 
-                    if(method_exists($controllerObj, $callAction)){
-                        $controllerObj->$callAction($args);
-                    }else{
-                        throw new \BadMethodCallException(
-                            'Method "' . $callAction . '" not found at controller ' . $this->getController(),
-                            422
-                        );
-                    }
-            }catch (\Exception $e){
+            if(method_exists($controllerObj, $callAction)){
+                $controllerObj->$callAction($args);
+            }else{
+                $e = new \BadMethodCallException(
+                    'Method "' . $callAction . '" not found at controller ' . $this->getController(),
+                    422
+                );
+
                 $log = $this->app->getLog();
                 $log->warning($e);
-//                $this->app->notFound();
+                throw $e;
             }
         }
     }
@@ -162,7 +161,13 @@ class RouteManager{
         if (file_exists($this->getControllerPath())) {
             include $this->getControllerPath();
         } else {
-            throw new \Exception('Controller not found ' . $this->getController() . '. Check your route config file.');
+            $e = new \Exception(
+                'Controller not found ' . $this->getController() . '. Check your route config file.',
+                422
+            );
+            $log = $this->app->getLog();
+            $log->warning($e);
+            throw $e;
         }
 
         return true;

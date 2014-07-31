@@ -15,7 +15,7 @@
                     <div class="app-title width-full text-center">
                         <h3><a href="{{ app.urlFor('home') }}">{{ app.getName() }}</a></h3>
                     </div>
-                    <form name="searchPhoto" class="navbar-form" role="form" action="{{ app.urlFor('list') }}" method="POST">
+                    <form name="searchPhoto" class="navbar-form" role="form" action="{{ app.urlFor('hashtag') }}" method="POST">
                         <div class="input-group width-full">
                             <span class="input-group-addon">#</span>
                             <input class="form-control width-full" type="text" name="hashtag" value="{{ hashtag }}" placeholder="Digite uma #hashtag e descubra lindas fotos do Instagram" />
