@@ -1,9 +1,9 @@
-{% extends "layouts/default.html.twig" %}
+{% extends "layouts/hashtag.html.twig" %}
 
 {% block content %}
 
     <section id="main-content">
-        <div class="container-fluid">
+        <div id="photos" class="container-fluid">
             {% if success == false %}
                 <div class="row">
                     <div class="alert alert-danger" role="alert">
@@ -28,7 +28,24 @@
 
             {% endif %}
         </div>
-        <div id="tag_info" data_max_tag_id="{{ pagination.max_tag_id }}"></div>
+
+        <br />
+
+        <div class="row">
+            <div id="tag_info" hashtag="{{ hashtag }}" data_max_tag_id="{{ pagination.max_tag_id }}"></div>
+
+            <div id="loading" class="col-md-2 col-md-offset-5">
+                <img class="pull-left" src="{{ assetUri }}/assets/global/img/ajax-loader-4whitebg.gif" alt=""/>
+                <p class="pull-left">Loading...</p>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div id="message" class="col-md-2 col-md-offset-5"></div>
+        </div>
+
     </section>
+
 
 {% endblock content %}
