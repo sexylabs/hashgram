@@ -44,11 +44,13 @@ class InstagramService {
                 $curlResult = $this->makeCurl($url,$options, false);
 
                 $result["data"] = $curlResult->data;
+                $result["pagination"] = $curlResult->pagination;
 
                 if (!empty($result["data"]))
                 {
-                    $result["success"]  = TRUE;
-                    $result["message"]  = "";
+                    $result["success"]   = TRUE;
+                    $result["pagination"]->max_tag_id = $this->extractMaxTagId($result["pagination"]->next_url);
+                    $result["message"]   = "";
                 }
                 else
                 {
@@ -115,6 +117,18 @@ class InstagramService {
             throw new \Exception("You need to set up the CLIENT_ID in order to show the popular photos.");
 
         }
+    }
+
+    /**
+     * Extract max_tag_id from next_url that comes from Instagram API
+     *
+     * @param $url
+     * @return mixed
+     */
+    private function extractMaxTagId($url)
+    {
+        $array = explode("&max_tag_id=", $url);
+        return $array[1];
     }
 
     /**

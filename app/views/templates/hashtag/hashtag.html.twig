@@ -4,7 +4,6 @@
 
     <section id="main-content">
         <div class="container-fluid">
-
             {% if success == false %}
                 <div class="row">
                     <div class="alert alert-danger" role="alert">
@@ -29,6 +28,7 @@
 
             {% endif %}
         </div>
+        <div id="tag_info" data_max_tag_id="{{ pagination.max_tag_id }}"></div>
     </section>
 
 {% endblock content %}
