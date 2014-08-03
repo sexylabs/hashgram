@@ -40,13 +40,19 @@ class HashtagController extends BasicController {
 
                 $result = $this->instagramService->getPhotosByTag($hashtag);
 
-                $options['hashtag'] = $hashtag;
-                $options['success'] = $result["success"];
-                $options['result']  = $result["data"];
-                $options['message'] = $result["message"];
+                $options['hashtag']    = $hashtag;
+                $options['success']    = $result["success"];
+                $options['result']     = $result["data"];
+                $options['message']    = $result["message"];
+                $options['pagination'] = $result["pagination"];
+
+//                echo '<pre>';
+//                var_dump($result["pagination"]);
+//                echo '</pre>';
+//                die();
 
                 $this->app->view()->appendData($options);
-                $this->app->render('templates/home/hashtag.html.twig');
+                $this->app->render('templates/hashtag/hashtag.html.twig');
             }
             catch (\Exception $e)
             {
@@ -57,7 +63,7 @@ class HashtagController extends BasicController {
                 $options['message'] = $e->getMessage();
 
                 $this->app->view()->appendData($options);
-                $this->app->render('templates/home/hashtag.html.twig');
+                $this->app->render('templates/hashtag/hashtag.html.twig');
             }
         }
         else
@@ -66,7 +72,7 @@ class HashtagController extends BasicController {
             $options['message'] = "You haven't provided any hashtag.";
 
             $this->app->view()->appendData($options);
-            $this->app->render('templates/home/hashtag.html.twig');
+            $this->app->render('templates/hashtag/hashtag.html.twig');
         }
     }
 }

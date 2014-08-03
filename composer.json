@@ -1,7 +1,7 @@
 {
     "name": "Hashgram",
-    "description": "Service para integrar o projeto à API do Instagram. Issue #6.",
-    "version": "0.6.0",
+    "description": "Show more photos if the user scrolls down. Issue #13.",
+    "version": "0.8.0",
     "keywords": ["instagram", "photo", "party"],
     "homepage": "https://github.com/sexylabs/hashgram",
     "authors": [
